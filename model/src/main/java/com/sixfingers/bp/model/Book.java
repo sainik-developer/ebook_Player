@@ -11,5 +11,4 @@ public class Book {
     public Map<Locale, List<Page>> languageListMap;
 
 
-
 }
