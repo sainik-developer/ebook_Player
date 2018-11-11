@@ -8,12 +8,12 @@ import java.io.InputStream;
  * Created by sainik on 04.11.18.
  */
 
-public interface ConfigParser {
+public interface Parser<T> {
 
     /***
      *
      * @param inputStream
      * @return
      */
-    Book parser(InputStream inputStream);
+    T parser(InputStream inputStream);
 }
