@@ -10,16 +10,16 @@ import java.io.IOException;
 /**
  * Created by sainik on 11.11.18.
  */
-
 public class ParagraphTagProcessor extends TagProcessor<Paragraph> {
+
     @Override
     String[] childTags() {
-        return new String[0];
+        return new String[]{"ac", "b", "i", "sh", "bg"};
     }
 
     @Override
     String name() {
-        return null;
+        return "p";
     }
 
     @Override

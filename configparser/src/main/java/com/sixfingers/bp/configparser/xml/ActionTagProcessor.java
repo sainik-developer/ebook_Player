@@ -10,7 +10,6 @@ import java.io.IOException;
 /**
  * Created by sainik on 12.11.18.
  */
-
 public class ActionTagProcessor extends TagProcessor<ActionSpanable> {
     @Override
     String[] childTags() {

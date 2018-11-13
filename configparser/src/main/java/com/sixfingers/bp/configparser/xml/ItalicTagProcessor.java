@@ -10,11 +10,10 @@ import java.io.IOException;
 /**
  * Created by sainik on 12.11.18.
  */
-
 public class ItalicTagProcessor extends TagProcessor<TextStyleSpanable> {
     @Override
     String[] childTags() {
-        return new String[0];
+        return new String[]{"ac"};
     }
 
     @Override

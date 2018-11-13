@@ -6,7 +6,7 @@
       * `bg-res` = background resource to drown
       * `res` = audio clip file uri
 
-1. `<Video></Video>` attributes are as below
+1. `<Video></Video>` attributes are as below [NOT NOW] as well popUp
 
       * `position` = '%top,%left,%width,%height' `0<=top,left,width,hight<=100`
       * `border` = `{none|dots|line}`

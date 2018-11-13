@@ -2,6 +2,8 @@ package com.sixfingers.bp.model;
 
 import com.sixfingers.bp.model.enums.Border;
 
+import java.util.List;
+
 public class Text extends Content {
     public String fontName;
     public int fontNumber = 20;
@@ -13,5 +15,7 @@ public class Text extends Content {
     public boolean actionEnable;
     public String audioRes;
     public int paragraphSpacing;
+
+    public List<Paragraph> paragraphs;
 
 }
