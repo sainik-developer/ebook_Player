@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ItalicTagProcessor extends TagProcessor<TextStyleSpanable> {
     @Override
     String[] childTags() {
-        return new String[]{"ac"};
+        return new String[]{"i"};
     }
 
     @Override

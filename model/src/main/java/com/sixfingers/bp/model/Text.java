@@ -2,6 +2,7 @@ package com.sixfingers.bp.model;
 
 import com.sixfingers.bp.model.enums.Border;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Text extends Content {
@@ -16,6 +17,6 @@ public class Text extends Content {
     public String audioRes;
     public int paragraphSpacing;
 
-    public List<Paragraph> paragraphs;
+    public List<Paragraph> paragraphs = new LinkedList<>();
 
 }

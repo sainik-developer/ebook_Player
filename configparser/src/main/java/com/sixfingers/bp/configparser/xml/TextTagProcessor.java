@@ -1,5 +1,6 @@
 package com.sixfingers.bp.configparser.xml;
 
+import com.sixfingers.bp.model.Paragraph;
 import com.sixfingers.bp.model.Text;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -25,21 +26,30 @@ public class TextTagProcessor extends TagProcessor<Text> {
     @Override
     Text read(XmlPullParser parser) throws XmlPullParserException, IOException {
 
+        Text text = new Text();
         parser.require(XmlPullParser.START_TAG, ns, "Text");
+        readAttributes(parser, text);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-
-            TagProcessor<?> tagProcessor = getTagProcessorByName(name);
-            if (tagProcessor != null) {
-                tagProcessor.read(parser);
+            if (name.equals("p")) {
+                TagProcessor<Paragraph> paragraphTagProcessor = TagEnum.PARAGRAPH.getProcessorByText();
+                Paragraph paragraph = paragraphTagProcessor.read(parser);
+                text.paragraphs.add(paragraph);
             } else {
                 skip(parser);
             }
         }
 
-        return null;
+        return text;
+    }
+
+
+    private void readAttributes(final XmlPullParser parser, final Text text) {
+        parser.getAttributeValue(ns,"font-name");
+        parser.getAttributeValue(ns,"fontNumber");
+
     }
 }
