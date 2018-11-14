@@ -1,6 +1,7 @@
 package com.sixfingers.bp.model;
 
 import com.sixfingers.bp.model.enums.Border;
+import com.sixfingers.bp.model.enums.TextAlign;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,10 +9,11 @@ import java.util.List;
 public class Text extends Content {
     public String fontName;
     public int fontNumber = 20;
-    public String textAlign;
+    public TextAlign textAlign;
     public Border border;
     public String backGroudColor;
     public String textColor;
+    public int angle;
     public boolean highlightTextOnAudio;
     public boolean actionEnable;
     public String audioRes;

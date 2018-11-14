@@ -7,4 +7,8 @@ public class Position {
     public float width;
     public float height;
 
+    public Position(final String formattedStr) {
+
+    }
+
 }

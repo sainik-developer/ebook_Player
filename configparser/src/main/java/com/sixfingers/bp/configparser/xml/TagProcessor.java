@@ -1,5 +1,7 @@
 package com.sixfingers.bp.configparser.xml;
 
+import com.sixfingers.bp.model.Text;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -17,13 +19,13 @@ public abstract class TagProcessor<T> {
      *
      * @return
      */
-    abstract String[] childTags();
+    public abstract String[] childTags();
 
     /***
      *
      * @return
      */
-    abstract String name();
+    public abstract String name();
 
     /***
      *
@@ -32,7 +34,9 @@ public abstract class TagProcessor<T> {
      * @throws XmlPullParserException
      * @throws IOException
      */
-    abstract T read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException;
+    public abstract T read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException;
+
+    protected abstract void readAttributes(final XmlPullParser parser, final T t);
 
 
     protected void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -50,11 +54,6 @@ public abstract class TagProcessor<T> {
                     break;
             }
         }
-    }
-
-    protected TagProcessor<?> getTagProcessorByName(String name) {
-
-        return null;
     }
 
 

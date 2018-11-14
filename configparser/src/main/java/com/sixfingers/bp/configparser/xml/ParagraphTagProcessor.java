@@ -1,6 +1,7 @@
 package com.sixfingers.bp.configparser.xml;
 
 import com.sixfingers.bp.model.Paragraph;
+import com.sixfingers.bp.model.Text;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,17 +14,24 @@ import java.io.IOException;
 public class ParagraphTagProcessor extends TagProcessor<Paragraph> {
 
     @Override
-    String[] childTags() {
+    public String[] childTags() {
         return new String[]{"ac", "b", "i", "sh", "bg"};
     }
 
     @Override
-    String name() {
+    public String name() {
         return "p";
     }
 
     @Override
-    Paragraph read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+    public Paragraph read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+
         return null;
+    }
+
+    @Override
+    protected void readAttributes(XmlPullParser parser, Paragraph paragraph) {
+
+        return;
     }
 }
