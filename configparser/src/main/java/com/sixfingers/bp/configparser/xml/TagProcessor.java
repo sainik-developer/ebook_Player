@@ -1,7 +1,5 @@
 package com.sixfingers.bp.configparser.xml;
 
-import com.sixfingers.bp.model.Text;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -36,6 +34,11 @@ public abstract class TagProcessor<T> {
      */
     public abstract T read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException;
 
+    /***
+     *
+     * @param parser
+     * @param t
+     */
     protected abstract void readAttributes(final XmlPullParser parser, final T t);
 
 

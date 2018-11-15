@@ -37,7 +37,7 @@ public class TextTagProcessor extends TagProcessor<Text> {
             }
             String name = parser.getName();
             if (name.equals("p")) {
-                TagProcessor<Paragraph> paragraphTagProcessor = TagEnum.PARAGRAPH.getProcessorByText();
+                TagProcessor<Paragraph> paragraphTagProcessor = TagEnum.PARAGRAPH.getProcessor();
                 Paragraph paragraph = paragraphTagProcessor.read(parser);
                 text.paragraphs.add(paragraph);
             } else {

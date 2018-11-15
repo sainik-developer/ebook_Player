@@ -12,17 +12,22 @@ import java.io.IOException;
  */
 public class ActionTagProcessor extends TagProcessor<ActionSpanable> {
     @Override
-    String[] childTags() {
+    public String[] childTags() {
         return new String[0];
     }
 
     @Override
-    String name() {
+    public String name() {
         return "ac";
     }
 
     @Override
-    ActionSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+    public ActionSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
         return null;
+    }
+
+    @Override
+    protected void readAttributes(XmlPullParser parser, ActionSpanable actionSpanable) {
+        
     }
 }

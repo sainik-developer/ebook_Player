@@ -13,17 +13,22 @@ import java.io.IOException;
 public class ShadowTagProcessor extends TagProcessor<TextStyleSpanable> {
 
     @Override
-    String[] childTags() {
+    public String[] childTags() {
         return new String[]{"ac"};
     }
 
     @Override
-    String name() {
+    public String name() {
         return "sh";
     }
 
     @Override
-    TextStyleSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+    public TextStyleSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
         return null;
+    }
+
+    @Override
+    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {
+
     }
 }

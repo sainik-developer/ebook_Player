@@ -25,7 +25,7 @@ public enum TagEnum {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> TagProcessor<T> getProcessorByText() {
+    public <T> TagProcessor<T> getProcessor() {
         return (TagProcessor<T>) tagProcessor;
     }
 }

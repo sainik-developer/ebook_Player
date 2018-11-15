@@ -8,7 +8,7 @@ public class Paragraph {
     public int lineIndent;
     public int headIndent;
     public String text;
-    public List<Spanable> spanables;
+    public List<Spanable> spanables = new LinkedList<>();
 
     public List<TextStyleSpanable> getTextStyles() {
         List<TextStyleSpanable> textStyleSpanables = new LinkedList<>();
