@@ -7,6 +7,7 @@ package com.sixfingers.bp.model;
 public class ActionSpanable extends Spanable {
 
     public float audioTime;
+    public String text;
     // in second iteration
     // public Uri videoClip;
     // public int id;

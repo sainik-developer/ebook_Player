@@ -1,5 +1,7 @@
 package com.sixfingers.bp.configparser.xml;
 
+import android.util.Pair;
+
 import com.sixfingers.bp.model.ActionSpanable;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -10,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by sainik on 12.11.18.
  */
-public class ActionTagProcessor extends TagProcessor<ActionSpanable> {
+public class ActionTagProcessor extends TagProcessor<Pair<ActionSpanable, String>> {
     @Override
     public String[] childTags() {
         return new String[0];
@@ -22,12 +24,12 @@ public class ActionTagProcessor extends TagProcessor<ActionSpanable> {
     }
 
     @Override
-    public ActionSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+    public Pair<ActionSpanable, String> read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
         return null;
     }
 
     @Override
-    protected void readAttributes(XmlPullParser parser, ActionSpanable actionSpanable) {
-        
+    protected void readAttributes(XmlPullParser parser, Pair<ActionSpanable, String> actionSpanable) {
+
     }
 }

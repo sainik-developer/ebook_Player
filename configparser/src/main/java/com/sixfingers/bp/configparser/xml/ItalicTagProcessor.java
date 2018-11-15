@@ -1,5 +1,7 @@
 package com.sixfingers.bp.configparser.xml;
 
+import android.util.Pair;
+
 import com.sixfingers.bp.model.TextStyleSpanable;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -10,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by sainik on 12.11.18.
  */
-public class ItalicTagProcessor extends TagProcessor<TextStyleSpanable> {
+public class ItalicTagProcessor extends TagProcessor<Pair<TextStyleSpanable, String>> {
     @Override
     public String[] childTags() {
         return new String[]{"i"};
@@ -22,12 +24,12 @@ public class ItalicTagProcessor extends TagProcessor<TextStyleSpanable> {
     }
 
     @Override
-    public TextStyleSpanable read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
+    public Pair<TextStyleSpanable, String> read(XmlPullParser xmlPullParser) throws XmlPullParserException, IOException {
         return null;
     }
 
     @Override
-    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {
+    protected void readAttributes(XmlPullParser parser, Pair<TextStyleSpanable, String> textStyleSpanable) {
 
     }
 }
