@@ -33,9 +33,7 @@ public class ConfigFileJSONParser implements Parser<InputStream, Book> {
 
     @Override
     public Book parser(InputStream inputStream) {
-
         return gson.fromJson(new InputStreamReader(inputStream), Book.class);
-
     }
 
 
