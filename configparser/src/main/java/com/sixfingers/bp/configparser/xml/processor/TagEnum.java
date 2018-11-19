@@ -1,5 +1,6 @@
 package com.sixfingers.bp.configparser.xml.processor;
 
+import com.sixfingers.bp.configparser.xml.processor.audio.AudioTagProcessor;
 import com.sixfingers.bp.configparser.xml.processor.text.ActionTagProcessor;
 import com.sixfingers.bp.configparser.xml.processor.text.ItalicTagProcessor;
 import com.sixfingers.bp.configparser.xml.processor.text.ParagraphTagProcessor;
@@ -13,6 +14,7 @@ import com.sixfingers.bp.configparser.xml.processor.text.TextTagProcessor;
 
 public enum TagEnum {
 
+    AUDIO(new AudioTagProcessor(), "Audio"),
     TEXT(new TextTagProcessor(), "Text"),
     PARAGRAPH(new ParagraphTagProcessor(), "p"),
     ACTION(new ActionTagProcessor(), "ac"),

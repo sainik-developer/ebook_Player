@@ -2,6 +2,7 @@ package com.sixfingers.bp.configparser.xml.processor.text;
 
 import com.sixfingers.bp.configparser.xml.processor.TagEnum;
 import com.sixfingers.bp.configparser.xml.processor.TagProcessor;
+import com.sixfingers.bp.model.Page;
 import com.sixfingers.bp.model.Paragraph;
 import com.sixfingers.bp.model.Position;
 import com.sixfingers.bp.model.Text;
@@ -16,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by sainik on 11.11.18.
  */
-public class TextTagProcessor extends TagProcessor<Void,Text> {
+public class TextTagProcessor extends TagProcessor<Text, Text> {
 
     @Override
     public String[] childTags() {
@@ -29,8 +30,7 @@ public class TextTagProcessor extends TagProcessor<Void,Text> {
     }
 
     @Override
-    public void read(XmlPullParser parser, Void v) throws XmlPullParserException, IOException {
-        Text text = new Text();
+    public void read(XmlPullParser parser, Text text) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Text");
         readAttributes(parser, text);
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -39,8 +39,8 @@ public class TextTagProcessor extends TagProcessor<Void,Text> {
             }
             String name = parser.getName();
             if (name.equals("p")) {
-                TagProcessor<Text,Paragraph> paragraphTagProcessor = TagEnum.PARAGRAPH.getProcessor();
-                paragraphTagProcessor.read(parser,text);
+                TagProcessor<Text, Paragraph> paragraphTagProcessor = TagEnum.PARAGRAPH.getProcessor();
+                paragraphTagProcessor.read(parser, text);
             } else {
                 skip(parser);
             }
