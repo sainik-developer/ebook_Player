@@ -8,8 +8,8 @@ import android.text.Spannable;
 
 public abstract class Spanable {
 
-    public final int start;
-    public final int end;
+    public int start;
+    public int end;
 
     public Spanable(final int start, final int end){
         this.start = start;

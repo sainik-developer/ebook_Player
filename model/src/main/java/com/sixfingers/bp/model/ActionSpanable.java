@@ -12,8 +12,14 @@ public class ActionSpanable extends Spanable {
     // public Uri videoClip;
     // public int id;
 
-    public ActionSpanable(final int start, final int end, final int audioTime) {
+    public ActionSpanable(final int start, final int end) {
         super(start, end);
         this.audioTime = audioTime;
+    }
+
+    public enum Type {
+        AUDIO,
+        VIDEO,
+        POPUP
     }
 }
