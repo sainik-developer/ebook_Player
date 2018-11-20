@@ -39,8 +39,11 @@ public class BoldTagProcessor extends TagProcessor<Paragraph, TextStyleSpanable>
                     skip(parser);
                 }
             } else {
-                paragraph.text += parser.getText();
+                paragraph.text = paragraph.text + parser.getText();
             }
+        }
+        if (!parser.getName().equals("b")) {
+            throw new IllegalStateException("bold tag is not closed!");
         }
         int end = paragraph.text.length();
         TextStyleSpanable boldSpanable = TextStyleSpanable.Type.BOLD.newInstance(start, end);
@@ -49,6 +52,5 @@ public class BoldTagProcessor extends TagProcessor<Paragraph, TextStyleSpanable>
 
     @Override
     protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {
-        return;
     }
 }

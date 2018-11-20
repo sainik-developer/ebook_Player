@@ -32,6 +32,7 @@ public class ActionTagProcessorTest {
     private final String INVALID_TAG_CLOSE_ACTION_TAG = "<ac audio-time=\"0.598\">Nearly/ac>";
     private final String INVALID_TAG_NOT_CLOSED = "<ac audio-time=\"0.598\"> Nearly";
     private final String INVALID_NO_VALUE_TAG = "<ac audio-time=\"0.598\"></ac>";
+    // TODO test with chinese language
 
     private void common(final String str, final Paragraph paragraph) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();

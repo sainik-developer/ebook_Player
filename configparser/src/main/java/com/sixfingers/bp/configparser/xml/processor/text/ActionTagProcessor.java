@@ -28,22 +28,17 @@ public class ActionTagProcessor extends TagProcessor<Paragraph, ActionSpanable> 
         parser.require(XmlPullParser.START_TAG, ns, "ac");
         ActionSpanable actionSpanable = new ActionSpanable(0, 0);
         readAttributes(parser, actionSpanable);
-        int count = 0;
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                actionSpanable.text = parser.getText();
-                if (actionSpanable.text == null)
-                    throw new IllegalStateException("Action tag should have a value");
-            }
-            count++;
-            if (count > 1)
-                throw new IllegalStateException("End tag is not found, malformed xml");
+        parser.next();
+        if (parser.getEventType() != XmlPullParser.START_TAG || parser.getEventType() != XmlPullParser.END_TAG) {
+            actionSpanable.text = parser.getText();
+            if (actionSpanable.text == null || actionSpanable.text.isEmpty())
+                throw new IllegalStateException("Action tag should have a value");
+        } else {
+            throw new IllegalStateException("Action tag should have a value");
         }
-        if (!parser.getName().equals("ac")) {
+        parser.next();
+        if (parser.getName() == null || !parser.getName().equals("ac")) {
             throw new IllegalStateException("Action tag is not closed!");
-        }
-        if (actionSpanable.text.isEmpty()) {
-            throw new IllegalStateException("Action tag has no value");
         }
         actionSpanable.start = paragraph.text.length();
         paragraph.text = paragraph.text + actionSpanable.text;
