@@ -2,7 +2,6 @@ package com.sixfingers.bp.configparser.xml.processor.text;
 
 import com.sixfingers.bp.configparser.xml.processor.TagEnum;
 import com.sixfingers.bp.configparser.xml.processor.TagProcessor;
-import com.sixfingers.bp.model.Page;
 import com.sixfingers.bp.model.Paragraph;
 import com.sixfingers.bp.model.Position;
 import com.sixfingers.bp.model.Text;

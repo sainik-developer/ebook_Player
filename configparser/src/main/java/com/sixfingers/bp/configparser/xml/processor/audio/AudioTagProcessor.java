@@ -2,7 +2,6 @@ package com.sixfingers.bp.configparser.xml.processor.audio;
 
 import com.sixfingers.bp.configparser.xml.processor.TagProcessor;
 import com.sixfingers.bp.model.Audio;
-import com.sixfingers.bp.model.Page;
 import com.sixfingers.bp.model.Position;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -13,7 +12,6 @@ import java.io.IOException;
 /**
  * Created by sainik on 18.11.18.
  */
-
 public class AudioTagProcessor extends TagProcessor<Audio, Audio> {
     @Override
     public String[] childTags() {
