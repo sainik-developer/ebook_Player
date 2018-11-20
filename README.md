@@ -3,7 +3,7 @@ android book player
 
 
 How to publish the jar/aar
-
+```gradle
 apply plugin: 'maven-publish'
 
 
@@ -55,3 +55,4 @@ configurations {
         extendsFrom configurations.default
     }
 }
+```
