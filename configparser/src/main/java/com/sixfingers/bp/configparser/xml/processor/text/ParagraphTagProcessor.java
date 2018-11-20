@@ -1,7 +1,10 @@
-package com.sixfingers.bp.configparser.xml;
+package com.sixfingers.bp.configparser.xml.processor.text;
 
+import com.sixfingers.bp.configparser.xml.processor.TagEnum;
+import com.sixfingers.bp.configparser.xml.processor.TagProcessor;
 import com.sixfingers.bp.model.ActionSpanable;
 import com.sixfingers.bp.model.Paragraph;
+import com.sixfingers.bp.model.Text;
 import com.sixfingers.bp.model.TextStyleSpanable;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -12,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by sainik on 11.11.18.
  */
-public class ParagraphTagProcessor extends TagProcessor<Paragraph> {
+public class ParagraphTagProcessor extends TagProcessor<Text, Paragraph> {
 
     @Override
     public String[] childTags() {
@@ -25,38 +28,36 @@ public class ParagraphTagProcessor extends TagProcessor<Paragraph> {
     }
 
     @Override
-    public Paragraph read(XmlPullParser parser) throws XmlPullParserException, IOException {
+    public void read(XmlPullParser parser, Text text) throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         parser.require(XmlPullParser.START_TAG, ns, "p");
         readAttributes(parser, paragraph);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
+                paragraph.text = parser.getText();
                 continue;
             }
             String name = parser.getName();
             if (name.equals("ac")) {
-                TagProcessor<ActionSpanable> actionSpanableTagProcessor = TagEnum.ACTION.getProcessor();
-                ActionSpanable actionSpanable = actionSpanableTagProcessor.read(parser);
-                paragraph.spanables.add(actionSpanable);
+                TagProcessor<Paragraph, ActionSpanable> actionSpanableTagProcessor = TagEnum.ACTION.getProcessor();
+                actionSpanableTagProcessor.read(parser, paragraph);
             } else if (name.equals("b")) {
-                TagProcessor<TextStyleSpanable> boldTagProcessor = TagEnum.BOLD.getProcessor();
-                TextStyleSpanable bold = boldTagProcessor.read(parser);
-                paragraph.spanables.add(bold);
+                TagProcessor<Paragraph, TextStyleSpanable> boldTagProcessor = TagEnum.BOLD.getProcessor();
+                boldTagProcessor.read(parser, paragraph);
             } else if (name.equals("i")) {
-                TagProcessor<TextStyleSpanable> italicTagProcessor = TagEnum.ITALIC.getProcessor();
-                TextStyleSpanable italic = italicTagProcessor.read(parser);
-                paragraph.spanables.add(italic);
+                TagProcessor<Paragraph, TextStyleSpanable> italicTagProcessor = TagEnum.ITALIC.getProcessor();
+                italicTagProcessor.read(parser, paragraph);
             } else if (name.equals("sh")) {
-                TagProcessor<TextStyleSpanable> shadowTagProcessor = TagEnum.SHADOW.getProcessor();
-                TextStyleSpanable shadow = shadowTagProcessor.read(parser);
-                paragraph.spanables.add(shadow);
+                TagProcessor<Paragraph, TextStyleSpanable> shadowTagProcessor = TagEnum.SHADOW.getProcessor();
+                shadowTagProcessor.read(parser, paragraph);
             } else if (name.equals("bg")) {
-                TagProcessor<TextStyleSpanable> backgroundTagProcessor = TagEnum.TEXT_BACK_GROUND.getProcessor();
-                TextStyleSpanable bgColor = backgroundTagProcessor.read(parser);
-                paragraph.spanables.add(bgColor);
+                TagProcessor<Paragraph, TextStyleSpanable> backgroundTagProcessor = TagEnum.TEXT_BACK_GROUND.getProcessor();
+                backgroundTagProcessor.read(parser, paragraph);
+            } else {
+                skip(parser);
             }
         }
-        return null;
+        text.paragraphs.add(paragraph);
     }
 
     @Override
