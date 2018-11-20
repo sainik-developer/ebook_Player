@@ -29,6 +29,7 @@ public class BoldTagProcessorTest {
     private final String INVALID_MULTI_ACTION_TAG_NOT_CLOSED = "<b>  <ac audio-time=\"0.598\">Nearly  <ac audio-time=\"0.898\">Nearly</ac> </b>";
     private final String INVALID_MULTI_ACTION_TAG_NOT_CLOSED_BOLD = "<b>  <ac audio-time=\"0.598\">Nearly  <ac audio-time=\"0.898\">Nearly</ac> <b>";
     private final String BOLD_WITHOUT_ACTION_TAG = "<b>  Nearly  Nearly <b>";
+    // TODO add with chines
 
     private void common(final String str, final Paragraph paragraph) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();
