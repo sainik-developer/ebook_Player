@@ -44,6 +44,9 @@ public class TextTagProcessor extends TagProcessor<Text, Text> {
                 skip(parser);
             }
         }
+        if (!parser.getName().equals("Text")) {
+            throw new IllegalStateException("Text tag is not closed!");
+        }
     }
 
     @Override

@@ -50,6 +50,9 @@ public class ShadowTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
                 paragraph.text = paragraph.text.concat(parser.getText());
             }
         }
+        if (!parser.getName().equals("sh")) {
+            throw new IllegalStateException("Shadow tag is not closed!");
+        }
         int end = paragraph.text.length();
         shadowSpanable.end = end;
         paragraph.spanables.add(shadowSpanable);

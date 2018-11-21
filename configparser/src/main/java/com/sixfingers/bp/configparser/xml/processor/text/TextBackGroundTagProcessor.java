@@ -49,6 +49,9 @@ public class TextBackGroundTagProcessor extends TagProcessor<Paragraph, TextStyl
                 paragraph.text = paragraph.text.concat(parser.getText());
             }
         }
+        if (!parser.getName().equals("bg")) {
+            throw new IllegalStateException("Text Back ground tag is not closed!");
+        }
         int end = paragraph.text.length();
         shadowSpanable.end = end;
         paragraph.spanables.add(shadowSpanable);

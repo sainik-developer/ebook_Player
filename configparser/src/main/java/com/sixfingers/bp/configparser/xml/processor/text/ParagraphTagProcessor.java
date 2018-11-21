@@ -57,6 +57,9 @@ public class ParagraphTagProcessor extends TagProcessor<Text, Paragraph> {
                 skip(parser);
             }
         }
+        if (!parser.getName().equals("p")) {
+            throw new IllegalStateException("Paragraph tag is not closed!");
+        }
         text.paragraphs.add(paragraph);
     }
 
