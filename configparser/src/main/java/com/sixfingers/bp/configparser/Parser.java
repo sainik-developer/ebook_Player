@@ -8,7 +8,7 @@ import java.io.InputStream;
  * Created by sainik on 04.11.18.
  */
 
-public interface Parser<I,T> {
+public interface Parser<I, T> {
 
     /***
      *
