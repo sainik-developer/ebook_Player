@@ -12,8 +12,8 @@ public interface Parser<I, T> {
 
     /***
      *
-     * @param inputStream
+     * @param i
      * @return
      */
-    T parser(I inputStream);
+    T parser(I i);
 }
