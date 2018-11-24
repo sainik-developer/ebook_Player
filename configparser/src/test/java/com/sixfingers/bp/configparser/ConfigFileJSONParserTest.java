@@ -13,6 +13,7 @@ public class ConfigFileJSONParserTest {
     @Test
     public void test() throws FileNotFoundException {
         ConfigFileJSONParser configFileJSONParser = new ConfigFileJSONParser();
-        FileInputStream fileInputStream = new FileInputStream(ConfigFileJSONParserTest.class.getResource("resources/sample.json").getFile());
+        FileInputStream fileInputStream = new FileInputStream("./configparser/src/test/res/sample.json");
+        configFileJSONParser.parser(fileInputStream);
     }
 }

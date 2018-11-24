@@ -27,12 +27,10 @@ public class ContentXMLParser implements Parser<String, Content> {
     public Content parser(final String s) {
         // public static Spanned fromHtml (String source) to unescape
         // TODO test this code
-        final Spanned unescapedString = Html.fromHtml(s);
-        String s1 = unescapedString.toString();
         XmlPullParser parser = Xml.newPullParser();
         try {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            InputStream ip = new ByteArrayInputStream(s1.getBytes(Charset.forName("UTF-8")));
+            InputStream ip = new ByteArrayInputStream(s.getBytes(Charset.forName("UTF-8")));
             parser.setInput(ip, "UTF-8");
             parser.nextTag();
             if (parser.getName().equals("Text")) {

@@ -71,21 +71,21 @@ public class BoldTagProcessorTest {
         common(VALID_MULTI_ACTION_TAG_WITH_SPACE, paragraph);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testInvalidActionAtgNotClosed() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(INVALID_MULTI_ACTION_TAG_NOT_CLOSED, paragraph);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testInvalidBoldNotClosed() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(INVALID_MULTI_ACTION_TAG_NOT_CLOSED_BOLD, paragraph);
 
     }
 
-    @Test
-    void testValidBoldWithoutAction() throws XmlPullParserException, IOException {
+    @Test(expected = XmlPullParserException.class)
+    public void testValidBoldWithoutAction() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(BOLD_WITHOUT_ACTION_TAG, paragraph);
 

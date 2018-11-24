@@ -56,3 +56,11 @@ configurations {
     }
 }
 ```
+
+
+How to build+run test and publish to local .m2 
+
+```
+../gradlew clean assemble publishToMavenLocal
+```
+

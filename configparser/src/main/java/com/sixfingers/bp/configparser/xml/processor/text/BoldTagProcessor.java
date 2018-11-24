@@ -17,7 +17,7 @@ import java.io.IOException;
 public class BoldTagProcessor extends TagProcessor<Paragraph, TextStyleSpanable> {
     @Override
     public String[] childTags() {
-        return new String[]{"ac"};
+        return new String[]{"ac", "i"};
     }
 
     @Override

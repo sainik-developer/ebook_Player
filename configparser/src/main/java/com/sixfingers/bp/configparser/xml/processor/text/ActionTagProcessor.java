@@ -13,6 +13,7 @@ import java.io.IOException;
  * Created by sainik on 12.11.18.
  */
 public class ActionTagProcessor extends TagProcessor<Paragraph, ActionSpanable> {
+
     @Override
     public String[] childTags() {
         return new String[0];

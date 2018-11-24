@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanable> {
     @Override
     public String[] childTags() {
-        return new String[]{"ac"};
+        return new String[]{"ac", "b"};
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
                     skip(parser);
                 }
             } else {
-                paragraph.text += parser.getText();
+                paragraph.text = paragraph.text + parser.getText();
             }
         }
         int end = paragraph.text.length();
@@ -48,7 +48,5 @@ public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
     }
 
     @Override
-    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {
-
-    }
+    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {}
 }
