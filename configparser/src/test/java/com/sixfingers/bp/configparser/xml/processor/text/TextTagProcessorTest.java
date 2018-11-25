@@ -2,7 +2,6 @@ package com.sixfingers.bp.configparser.xml.processor.text;
 
 import android.util.Xml;
 
-import com.sixfingers.bp.model.Paragraph;
 import com.sixfingers.bp.model.Text;
 import com.sixfingers.bp.model.TextStyleSpanable;
 
@@ -18,7 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class TextTagProcessorTest {

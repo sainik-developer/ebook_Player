@@ -1,7 +1,5 @@
 package com.sixfingers.bp.configparser;
 
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Xml;
 
 import com.sixfingers.bp.configparser.xml.processor.TagEnum;

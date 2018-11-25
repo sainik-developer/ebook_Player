@@ -1,7 +1,5 @@
 package com.sixfingers.bp.model;
 
-import android.text.Spannable;
-
 /**
  * Created by sainik on 11.11.18.
  */
