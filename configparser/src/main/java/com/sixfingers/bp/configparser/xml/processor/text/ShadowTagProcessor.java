@@ -29,7 +29,7 @@ public class ShadowTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
     @Override
     public void read(XmlPullParser parser, Paragraph paragraph) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "sh");
-        TextStyleSpanable shadowSpanable = TextStyleSpanable.Type.SHADOW.newInstance(paragraph.text.length(), 0);
+        TextStyleSpanable shadowSpanable = TextStyleSpanable.Type.SHADOW.newInstance(paragraph.text.length(), 0, 0);
         readAttributes(parser, shadowSpanable);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.START_TAG) {
@@ -44,7 +44,7 @@ public class ShadowTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
                     TagProcessor<Paragraph, TextStyleSpanable> processor = TagEnum.ITALIC.getProcessor();
                     processor.read(parser, paragraph);
                 } else {
-                    skip(parser);
+                    throw new IllegalStateException("shadow tag only can have 'ac','b' or 'i'");
                 }
             } else {
                 paragraph.text = paragraph.text.concat(parser.getText());

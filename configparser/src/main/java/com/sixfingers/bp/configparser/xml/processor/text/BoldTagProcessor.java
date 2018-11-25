@@ -36,7 +36,7 @@ public class BoldTagProcessor extends TagProcessor<Paragraph, TextStyleSpanable>
                     TagProcessor<Paragraph, ActionSpanable> actionSpanableTagProcessor = TagEnum.ACTION.getProcessor();
                     actionSpanableTagProcessor.read(parser, paragraph);
                 } else {
-                    skip(parser);
+                    throw new IllegalStateException("shadow tag only can have 'ac' or 'i'");
                 }
             } else {
                 paragraph.text = paragraph.text + parser.getText();

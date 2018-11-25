@@ -2,10 +2,10 @@ package com.sixfingers.bp.configparser.xml.processor.text;
 
 import android.util.Xml;
 
+import com.sixfingers.bp.model.ActionSpanable;
 import com.sixfingers.bp.model.Paragraph;
 import com.sixfingers.bp.model.TextStyleSpanable;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class ShadowTagProcessorTest {
@@ -54,9 +57,9 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_SH_TAG, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(6, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(6, shadowSpanable.end);
     }
 
     @Test
@@ -64,9 +67,9 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_SH_WITH_SPACE, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(8, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(9, shadowSpanable.end);
     }
 
     @Test
@@ -74,9 +77,16 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_SH_MULTIPLE_ACTION_TAG, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(17, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(17, shadowSpanable.end);
+        ActionSpanable action1 = paragraph.getActionSpanables().get(0);
+        assertEquals(1, action1.start);
+        assertEquals(8, action1.end);
+        ActionSpanable action2 = paragraph.getActionSpanables().get(1);
+        assertEquals(9, action2.start);
+        assertEquals(16, action2.end);
+
     }
 
     @Test
@@ -84,9 +94,9 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_Sh_WITH_BOLD_TAG, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(19, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(19, shadowSpanable.end);
     }
 
     @Test
@@ -94,12 +104,12 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_SH_WITH_ITALIC_TAG, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(19, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(19, shadowSpanable.end);
         TextStyleSpanable italic1Spanable = paragraph.getTextStyles(TextStyleSpanable.Type.ITALIC).get(0);
-        Assert.assertEquals(0, italic1Spanable.start);
-        Assert.assertEquals(19, italic1Spanable.end);
+        assertEquals(1, italic1Spanable.start);
+        assertEquals(18, italic1Spanable.end);
     }
 
     @Test
@@ -107,15 +117,15 @@ public class ShadowTagProcessorTest {
         final Paragraph paragraph = new Paragraph();
         common(VALID_SH_WITH_ITALIC_BOLD_TAG, paragraph);
         TextStyleSpanable shadowSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW).get(0);
-        Assert.assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
-        Assert.assertEquals(0, shadowSpanable.start);
-        Assert.assertEquals(19, shadowSpanable.end);
+        assertTrue(shadowSpanable.color == Integer.parseInt("00556677"));
+        assertEquals(0, shadowSpanable.start);
+        assertEquals(19, shadowSpanable.end);
         TextStyleSpanable boldSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0);
-        Assert.assertEquals(0, boldSpanable.start);
-        Assert.assertEquals(19, boldSpanable.end);
+        assertEquals(1, boldSpanable.start);
+        assertEquals(9, boldSpanable.end);
         TextStyleSpanable italicSpanable = paragraph.getTextStyles(TextStyleSpanable.Type.ITALIC).get(0);
-        Assert.assertEquals(0, italicSpanable.start);
-        Assert.assertEquals(19, italicSpanable.end);
+        assertEquals(10, italicSpanable.start);
+        assertEquals(18, italicSpanable.end);
     }
 
     @Test(expected = IllegalStateException.class)

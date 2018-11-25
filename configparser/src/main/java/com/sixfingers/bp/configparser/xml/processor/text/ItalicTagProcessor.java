@@ -36,7 +36,7 @@ public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
                     TagProcessor<Paragraph, ActionSpanable> actionSpanableTagProcessor = TagEnum.ACTION.getProcessor();
                     actionSpanableTagProcessor.read(parser, paragraph);
                 } else {
-                    skip(parser);
+                    throw new IllegalStateException("shadow tag only can have 'ac' or 'b'");
                 }
             } else {
                 paragraph.text = paragraph.text + parser.getText();
