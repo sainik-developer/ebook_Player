@@ -10,13 +10,12 @@ public class Paragraph {
     public String text = "";
     public List<Spanable> spanables = new LinkedList<>();
 
-    public List<TextStyleSpanable> getTextStyles() {
+    public List<TextStyleSpanable> getTextStyles(final TextStyleSpanable.Type type) {
         List<TextStyleSpanable> textStyleSpanables = new LinkedList<>();
-        for (Spanable spanable : spanables) {
-            if (spanable instanceof TextStyleSpanable) {
+        for (Spanable spanable : spanables)
+            if (spanable instanceof TextStyleSpanable
+                    && ((TextStyleSpanable) spanable).type == type)
                 textStyleSpanables.add((TextStyleSpanable) spanable);
-            }
-        }
         return textStyleSpanables;
     }
 
