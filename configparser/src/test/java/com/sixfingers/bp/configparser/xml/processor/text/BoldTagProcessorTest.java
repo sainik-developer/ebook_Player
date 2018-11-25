@@ -3,6 +3,7 @@ package com.sixfingers.bp.configparser.xml.processor.text;
 import android.util.Xml;
 
 import com.sixfingers.bp.model.Paragraph;
+import com.sixfingers.bp.model.TextStyleSpanable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -48,27 +50,34 @@ public class BoldTagProcessorTest {
 
     @Test
     public void testChildTagsAndName() {
-        assertTrue(boldTagProcessor.childTags().length == 1);
+        assertTrue(boldTagProcessor.childTags().length == 2);
         assertTrue(boldTagProcessor.name().equals("b"));
         assertTrue(boldTagProcessor.childTags()[0].equals("ac"));
+        assertTrue(boldTagProcessor.childTags()[1].equals("i"));
     }
 
     @Test
     public void testReadValid() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(VALID_BOLD_TAG, paragraph);
+        assertEquals(0, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).start);
+        assertEquals(6, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).end);
     }
 
     @Test
     public void testBoldWithSpace() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(VALID_BOLD_TAG_WITH_SPACE, paragraph);
+        assertEquals(0, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).start);
+        assertEquals(11, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).end);
     }
 
     @Test
     public void testMultiActionTagValid() throws XmlPullParserException, IOException {
         Paragraph paragraph = new Paragraph();
         common(VALID_MULTI_ACTION_TAG_WITH_SPACE, paragraph);
+        assertEquals(0, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).start);
+        assertEquals(17, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD).get(0).end);
     }
 
     @Test(expected = IllegalStateException.class)

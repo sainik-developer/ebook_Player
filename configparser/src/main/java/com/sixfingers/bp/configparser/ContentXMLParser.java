@@ -25,8 +25,6 @@ public class ContentXMLParser implements Parser<String, Content> {
 
     @Override
     public Content parser(final String s) {
-        // public static Spanned fromHtml (String source) to unescape
-        // TODO test this code
         XmlPullParser parser = Xml.newPullParser();
         try {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -47,7 +45,7 @@ public class ContentXMLParser implements Parser<String, Content> {
                 return null;
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException(e);
         }
     }
 }

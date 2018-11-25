@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Paragraph {
-    public int lineSpacing;
-    public int lineIndent;
-    public int headIndent;
+    public int lineSpacing = 5;
+    public int lineIndent = 7;
+    public int headIndent = 7;
     public String text = "";
     public List<Spanable> spanables = new LinkedList<>();
 

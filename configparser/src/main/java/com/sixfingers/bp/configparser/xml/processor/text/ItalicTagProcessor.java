@@ -35,12 +35,18 @@ public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
                 if (name.equals("ac")) {
                     TagProcessor<Paragraph, ActionSpanable> actionSpanableTagProcessor = TagEnum.ACTION.getProcessor();
                     actionSpanableTagProcessor.read(parser, paragraph);
+                } else if (name.equals("b")) {
+                    TagProcessor<Paragraph, TextStyleSpanable> processor = TagEnum.BOLD.getProcessor();
+                    processor.read(parser, paragraph);
                 } else {
-                    throw new IllegalStateException("shadow tag only can have 'ac' or 'b'");
+                    throw new IllegalStateException("italic tag only can have 'ac' or 'b'");
                 }
             } else {
                 paragraph.text = paragraph.text + parser.getText();
             }
+        }
+        if (!parser.getName().equals("i")) {
+            throw new IllegalStateException("italic tag is not closed!");
         }
         int end = paragraph.text.length();
         TextStyleSpanable boldSpanable = TextStyleSpanable.Type.ITALIC.newInstance(start, end);
@@ -48,5 +54,6 @@ public class ItalicTagProcessor extends TagProcessor<Paragraph, TextStyleSpanabl
     }
 
     @Override
-    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {}
+    protected void readAttributes(XmlPullParser parser, TextStyleSpanable textStyleSpanable) {
+    }
 }

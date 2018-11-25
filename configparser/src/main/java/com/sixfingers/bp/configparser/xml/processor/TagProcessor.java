@@ -59,5 +59,10 @@ public abstract class TagProcessor<T, K> {
         }
     }
 
+    protected String getAttributeValue(XmlPullParser parser, String s, String s2, String defaultValue) {
+        String s1 = parser.getAttributeValue(s, s2);
+        return s1 == null || s1.isEmpty() ? defaultValue : s1;
+    }
+
 
 }

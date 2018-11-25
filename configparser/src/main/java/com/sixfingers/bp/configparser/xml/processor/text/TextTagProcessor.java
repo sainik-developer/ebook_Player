@@ -51,16 +51,15 @@ public class TextTagProcessor extends TagProcessor<Text, Text> {
 
     @Override
     protected void readAttributes(final XmlPullParser parser, final Text text) {
-        text.fontName = parser.getAttributeValue(ns, "font-name");
-        text.fontNumber = Integer.valueOf(parser.getAttributeValue(ns, "fontNumber"));
-        text.textAlign = TextAlign.valueOf(parser.getAttributeValue(ns, "textAlign"));
-        text.border = Border.valueOf(parser.getAttributeValue(ns, "border"));
-        text.backGroudColor = parser.getAttributeValue(ns, "bg-color");
+        text.fontName = getAttributeValue(parser, ns, "font-name", Text.DEFAULT_FONT_NAME);
+        text.fontNumber = Integer.valueOf(getAttributeValue(parser, ns, "fontNumber", Text.DEFAULT_FONT_NUMBER));
+        text.textAlign = TextAlign.valueOf(getAttributeValue(parser, ns, "textAlign", Text.DEFAULT_FONT_ALIGN));
+        text.border = Border.valueOf(getAttributeValue(parser, ns, "border", Text.DEFAULT_BORDER));
+        text.backGroudColor = Integer.parseInt(getAttributeValue(parser, ns, "bg-color", Text.DEFAULT_BG_COLOR));
         text.position = new Position(parser.getAttributeValue(ns, "position"));
-        text.textColor = parser.getAttributeValue(ns, "text-color");
-        text.angle = Integer.parseInt(parser.getAttributeValue(ns, "angle"));
-        text.highlightTextOnAudio = Boolean.parseBoolean(parser.getAttributeValue(ns, "highlightTextOnAudio"));
-        text.actionEnable = Boolean.parseBoolean(parser.getAttributeValue(ns, "action-enable"));
+        text.textColor = Integer.parseInt(getAttributeValue(parser, ns, "text-color", Text.DEFAULT_TEXT_COLOR));
+        text.angle = Integer.parseInt(getAttributeValue(parser, ns, "angle", Text.DEFAULT_ANGLE));
+        text.actionEnable = Boolean.parseBoolean(getAttributeValue(parser, ns, "action-enable", Text.DEFAULT_ACTION_ENABLE));
         text.audioRes = parser.getAttributeValue(ns, "audio-res");
     }
 }

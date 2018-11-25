@@ -37,5 +37,8 @@ public class AudioTagProcessor extends TagProcessor<Audio, Audio> {
     @Override
     protected void readAttributes(XmlPullParser parser, Audio t) {
         t.position = new Position(parser.getAttributeValue(ns, "position"));
+        t.res = parser.getAttributeValue(ns, "res");
+        if (t.res == null || t.res.isEmpty())
+            throw new IllegalArgumentException("Audio reource can't be null!!");
     }
 }
