@@ -28,7 +28,7 @@ public class TextBackGroundTagProcessor extends TagProcessor<Paragraph, TextStyl
     @Override
     public void read(XmlPullParser parser, Paragraph paragraph) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "bg");
-        TextStyleSpanable shadowSpanable = TextStyleSpanable.Type.SHADOW.newInstance(paragraph.text.length(), 0);
+        TextStyleSpanable shadowSpanable = TextStyleSpanable.Type.SHADOW.newInstance(paragraph.text.length(), 0, 0);
         readAttributes(parser, shadowSpanable);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.START_TAG) {
@@ -43,7 +43,7 @@ public class TextBackGroundTagProcessor extends TagProcessor<Paragraph, TextStyl
                     TagProcessor<Paragraph, TextStyleSpanable> processor = TagEnum.ITALIC.getProcessor();
                     processor.read(parser, paragraph);
                 } else {
-                    skip(parser);
+                    throw new IllegalStateException("Text Back ground tag is having other than `ac`, `b` or `i` tag");
                 }
             } else {
                 paragraph.text = paragraph.text.concat(parser.getText());
@@ -52,8 +52,7 @@ public class TextBackGroundTagProcessor extends TagProcessor<Paragraph, TextStyl
         if (!parser.getName().equals("bg")) {
             throw new IllegalStateException("Text Back ground tag is not closed!");
         }
-        int end = paragraph.text.length();
-        shadowSpanable.end = end;
+        shadowSpanable.end = paragraph.text.length();
         paragraph.spanables.add(shadowSpanable);
     }
 
