@@ -1,4 +1,4 @@
-apply plugin: 'com.android.feature'
+apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 task androidSourcesJar(type: Jar) {
@@ -46,7 +46,6 @@ configurations {
 
 android {
     compileSdkVersion 27
-    baseFeature true
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
@@ -66,6 +65,3 @@ android {
     }
 }
 
-dependencies {
-    application project(':app')
-}

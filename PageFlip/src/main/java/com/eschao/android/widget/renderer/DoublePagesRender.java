@@ -50,7 +50,7 @@ import com.eschao.android.widget.pageflip.PageFlipState;
  *
  * @author eschao
  */
-public class DoublePagesRender extends PageRender {
+public class    DoublePagesRender extends PageRender {
 
     /**
      * Constructor
