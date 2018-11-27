@@ -1,1 +1,1 @@
-include ':app', ':model', ':configparser'
+include ':app', ':model', ':configparser', ':PageFlip'
