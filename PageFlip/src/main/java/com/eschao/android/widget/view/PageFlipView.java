@@ -58,10 +58,10 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         init(context);
     }
 
-    public PageFlipView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
+//    public PageFlipView(Context context, AttributeSet attrs) {
+//        super(context, attrs);
+//        init(context);
+//    }
 
     private void init(Context context) {
         // create handler to tackle message
@@ -237,6 +237,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
             mDrawLock.lock();
             if (mPageRender != null) {
                 mPageRender.onDrawFrame();
+                mPageRender.sendMesaageDrawingFinished();
             }
         } finally {
             mDrawLock.unlock();

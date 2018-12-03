@@ -50,7 +50,7 @@ import com.eschao.android.widget.pageflip.PageFlipState;
  *
  * @author eschao
  */
-public class    DoublePagesRender extends PageRender {
+public class DoublePagesRender extends PageRender {
 
     /**
      * Constructor
@@ -111,14 +111,14 @@ public class    DoublePagesRender extends PageRender {
             mPageFlip.drawPageFrame();
         }
 
-        // 6. send message to main thread to notify drawing is ended so that
-        // we can continue to calculate next animation frame if need.
-        // Remember: the drawing operation is always in GL thread instead of
-        // main thread
-        Message msg = Message.obtain();
-        msg.what = MSG_ENDED_DRAWING_FRAME;
-        msg.arg1 = mDrawCommand;
-        mHandler.sendMessage(msg);
+//        // 6. send message to main thread to notify drawing is ended so that
+//        // we can continue to calculate next animation frame if need.
+//        // Remember: the drawing operation is always in GL thread instead of
+//        // main thread
+//        Message msg = Message.obtain();
+//        msg.what = MSG_ENDED_DRAWING_FRAME;
+//        msg.arg1 = mDrawCommand;
+//        mHandler.sendMessage(msg);
     }
 
     /**

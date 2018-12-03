@@ -19,6 +19,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.os.Message;
 
 import com.eschao.android.widget.pageflip.OnPageFlipListener;
 import com.eschao.android.widget.pageflip.PageFlip;
@@ -115,8 +116,21 @@ public abstract class PageRender implements OnPageFlipListener {
      * Calculate font size by given SP unit
      */
     protected int calcFontSize(int size) {
-        return (int)(size * mContext.getResources().getDisplayMetrics()
-                                    .scaledDensity);
+        return (int) (size * mContext.getResources().getDisplayMetrics()
+                .scaledDensity);
+    }
+
+    /***
+     * send message to main thread to notify drawing is ended so that
+     * we can continue to calculate next animation frame if need.
+     * Remember: the drawing operation is always in GL thread instead of
+     * main thread
+     */
+    public void sendMesaageDrawingFinished() {
+        Message msg = Message.obtain();
+        msg.what = MSG_ENDED_DRAWING_FRAME;
+        msg.arg1 = mDrawCommand;
+        mHandler.sendMessage(msg);
     }
 
     /**
@@ -127,7 +141,7 @@ public abstract class PageRender implements OnPageFlipListener {
     /**
      * Handle surface changing event
      *
-     * @param width surface width
+     * @param width  surface width
      * @param height surface height
      */
     public abstract void onSurfaceChanged(int width, int height);
