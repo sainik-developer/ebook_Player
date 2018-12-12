@@ -1,1 +1,1 @@
-include ':app', ':model', ':configparser', ':PageFlip'
+include ':app', ':model', ':configparser', ':PageFlip', ':bookplayer', ':audio'

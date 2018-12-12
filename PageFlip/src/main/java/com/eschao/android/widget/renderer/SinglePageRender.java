@@ -21,11 +21,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.os.Message;
 
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipState;
+import com.eschao.android.widget.view.Provider;
 
 /**
  * Single page render
@@ -50,8 +50,8 @@ public class SinglePageRender extends PageRender {
      * @see {@link PageRender(Context, PageFlip, Handler, int)}
      */
     public SinglePageRender(Context context, PageFlip pageFlip,
-                            Handler handler, int pageNo) {
-        super(context, pageFlip, handler, pageNo);
+                            Handler handler, int pageNo, final Provider pageProvider) {
+        super(context, pageFlip, handler, pageNo, pageProvider);
     }
 
     /**
@@ -93,14 +93,6 @@ public class SinglePageRender extends PageRender {
             mPageFlip.drawPageFrame();
         }
 
-        // 3. send message to main thread to notify drawing is ended so that
-        // we can continue to calculate next animation frame if need.
-        // Remember: the drawing operation is always in GL thread instead of
-        // main thread
-        Message msg = Message.obtain();
-        msg.what = MSG_ENDED_DRAWING_FRAME;
-        msg.arg1 = mDrawCommand;
-        mHandler.sendMessage(msg);
     }
 
     /**
@@ -178,8 +170,7 @@ public class SinglePageRender extends PageRender {
         p.setFilterBitmap(true);
 
         // 1. draw background bitmap
-//        Bitmap background = LoadBitmapTask.get(mContext).getBitmap();
-        Bitmap background = null;
+        Bitmap background = pageProvider.getBackgroundBitmap(mPageNo);
         Rect rect = new Rect(0, 0, width, height);
         mCanvas.drawBitmap(background, null, rect, p);
         background.recycle();

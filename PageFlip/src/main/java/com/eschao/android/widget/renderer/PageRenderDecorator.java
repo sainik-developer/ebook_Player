@@ -5,10 +5,9 @@ public class PageRenderDecorator extends PageRender {
     public final PageRender pageRender;
 
     public PageRenderDecorator(final PageRender pageRender) {
-        super(null, null, null, 0);
+        super(null, null, null, 0,null);
         this.pageRender = pageRender;
     }
-
 
     @Override
     public void onDrawFrame() {

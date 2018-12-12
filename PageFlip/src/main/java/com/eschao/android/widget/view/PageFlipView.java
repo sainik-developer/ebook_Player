@@ -30,6 +30,7 @@ import com.eschao.android.widget.pageflip.PageFlipException;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
+import com.sixfingers.bp.model.Book;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -53,7 +54,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     PageRender mPageRender;
     ReentrantLock mDrawLock;
 
-    public PageFlipView(Context context) {
+    public PageFlipView(Context context, PageRender pageRender, Book book) {
         super(context);
         init(context);
     }
@@ -70,7 +71,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         // load preferences
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        mDuration = pref.getInt(Constants.PREF_DURATION, 1000);
+        mDuration = 1000;
         int pixelsOfMesh = pref.getInt(Constants.PREF_MESH_PIXELS, 10);
         boolean isAuto = pref.getBoolean(Constants.PREF_PAGE_MODE, true);
 
@@ -87,7 +88,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         mPageNo = 1;
         mDrawLock = new ReentrantLock();
         mPageRender = new SinglePageRender(context, mPageFlip,
-                mHandler, mPageNo);
+                mHandler, mPageNo, null);
         // configure render
         setRenderer(this);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
@@ -108,33 +109,33 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
      *
      * @param enable true is enable
      */
-    public void enableAutoPage(boolean enable) {
-        if (mPageFlip.enableAutoPage(enable)) {
-            try {
-                mDrawLock.lock();
-                if (mPageFlip.getSecondPage() != null &&
-                        mPageRender instanceof SinglePageRender) {
-                    mPageRender = new DoublePagesRender(getContext(),
-                            mPageFlip,
-                            mHandler,
-                            mPageNo);
-                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
-                            mPageFlip.getSurfaceHeight());
-                } else if (mPageFlip.getSecondPage() == null &&
-                        mPageRender instanceof DoublePagesRender) {
-                    mPageRender = new SinglePageRender(getContext(),
-                            mPageFlip,
-                            mHandler,
-                            mPageNo);
-                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
-                            mPageFlip.getSurfaceHeight());
-                }
-                requestRender();
-            } finally {
-                mDrawLock.unlock();
-            }
-        }
-    }
+//    public void enableAutoPage(boolean enable) {
+//        if (mPageFlip.enableAutoPage(enable)) {
+//            try {
+//                mDrawLock.lock();
+//                if (mPageFlip.getSecondPage() != null &&
+//                        mPageRender instanceof SinglePageRender) {
+//                    mPageRender = new DoublePagesRender(getContext(),
+//                            mPageFlip,
+//                            mHandler,
+//                            mPageNo);
+//                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
+//                            mPageFlip.getSurfaceHeight());
+//                } else if (mPageFlip.getSecondPage() == null &&
+//                        mPageRender instanceof DoublePagesRender) {
+//                    mPageRender = new SinglePageRender(getContext(),
+//                            mPageFlip,
+//                            mHandler,
+//                            mPageNo);
+//                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
+//                            mPageFlip.getSurfaceHeight());
+//                }
+//                requestRender();
+//            } finally {
+//                mDrawLock.unlock();
+//            }
+//        }
+//    }
 
     /**
      * Get duration of animating
@@ -264,7 +265,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
                     mPageRender = new DoublePagesRender(getContext(),
                             mPageFlip,
                             mHandler,
-                            pageNo);
+                            pageNo, null);
                 }
             }
             // if there is only one page, create single page render when need
@@ -273,7 +274,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
                 mPageRender = new SinglePageRender(getContext(),
                         mPageFlip,
                         mHandler,
-                        pageNo);
+                        pageNo, null);
             }
 
             // let page render handle surface change

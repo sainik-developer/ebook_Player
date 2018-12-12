@@ -9,4 +9,7 @@ public class Property {
     public List<Locale> languagesSupported;
 
     public CloudProperty cloudProperty;
+
+    public String basePath;
 }
+
