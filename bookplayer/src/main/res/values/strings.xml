@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">bookplayer</string>
+    <string name="home">home</string>
+    <string name="dc">dc</string>
 </resources>
