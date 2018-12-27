@@ -25,7 +25,7 @@ import android.os.Handler;
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipState;
-import com.eschao.android.widget.view.Provider;
+import com.eschao.android.widget.view.provider.ContentProvider;
 
 /**
  * Double pages render
@@ -59,8 +59,8 @@ public class DoublePagesRender extends PageRender {
      */
     public DoublePagesRender(Context context, PageFlip pageFlip,
                              Handler handler, int pageNo,
-                             final Provider pageProvider) {
-        super(context, pageFlip, handler, pageNo, pageProvider);
+                             final ContentProvider pageContentProvider) {
+        super(context, pageFlip, handler, pageNo, pageContentProvider);
     }
 
     /**
@@ -204,7 +204,7 @@ public class DoublePagesRender extends PageRender {
 
         // 1. draw background bitmap
         // Bitmap background = LoadBitmapTask.get(mContext).getBitmap();
-        Bitmap background = pageProvider.getBackgroundBitmap(number);
+        Bitmap background = pageContentProvider.getBackgroundBitmap(height, width, number);
         Rect rect = new Rect(0, 0, width, height);
         if (width > height) {
             mCanvas.rotate(90);

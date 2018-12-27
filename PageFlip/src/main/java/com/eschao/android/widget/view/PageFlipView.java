@@ -22,7 +22,6 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.AttributeSet;
 import android.util.Log;
 
 import com.eschao.android.widget.pageflip.PageFlip;
@@ -30,8 +29,11 @@ import com.eschao.android.widget.pageflip.PageFlipException;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
+import com.eschao.android.widget.view.provider.ContentProvider;
+import com.eschao.android.widget.view.provider.ContentProviderBuilder;
 import com.sixfingers.bp.model.Book;
 
+import java.util.Locale;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -42,27 +44,35 @@ import javax.microedition.khronos.opengles.GL10;
  *
  * @author eschao
  */
-
 public class PageFlipView extends GLSurfaceView implements Renderer {
 
     private final static String TAG = "PageFlipView";
 
     int mPageNo;
+    Book book;
     int mDuration;
     Handler mHandler;
     PageFlip mPageFlip;
+    PageFlipViewType type;
     PageRender mPageRender;
     ReentrantLock mDrawLock;
+    ContentProvider contentProvider;
 
-    public PageFlipView(Context context, PageRender pageRender, Book book) {
+    public PageFlipView(final Context context,
+                        final PageFlipViewType type,
+                        final Book book,
+                        final ContentProviderBuilder contentProviderBuilder) {
         super(context);
+        this.type = type;
+        this.book = book;
+        contentProvider = prepareContentProvider(contentProviderBuilder);
         init(context);
     }
 
-//    public PageFlipView(Context context, AttributeSet attrs) {
-//        super(context, attrs);
-//        init(context);
-//    }
+    @Override
+    public boolean isInEditMode() {
+        return false;
+    }
 
     private void init(Context context) {
         // create handler to tackle message
@@ -87,11 +97,31 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         // init others
         mPageNo = 1;
         mDrawLock = new ReentrantLock();
-        mPageRender = new SinglePageRender(context, mPageFlip,
-                mHandler, mPageNo, null);
+        preparePageRenderer();
         // configure render
         setRenderer(this);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+    }
+
+
+    private ContentProvider prepareContentProvider(final ContentProviderBuilder builder) {
+        return builder
+                .setBook(book)
+                .setLocale(Locale.ENGLISH)
+                .setPageFlipView(this)
+                .build();
+    }
+
+
+    private void preparePageRenderer() {
+        switch (this.type) {
+            case PORTRAIT:
+                mPageRender = new SinglePageRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
+                break;
+            case LANDSCAPE:
+                mPageRender = new DoublePagesRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
+                break;
+        }
     }
 
 
@@ -259,23 +289,23 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
 
             // if there is the second page, create double page render when need
             int pageNo = mPageRender.getPageNo();
-            if (mPageFlip.getSecondPage() != null && width > height) {
-                if (!(mPageRender instanceof DoublePagesRender)) {
-                    mPageRender.release();
-                    mPageRender = new DoublePagesRender(getContext(),
-                            mPageFlip,
-                            mHandler,
-                            pageNo, null);
-                }
-            }
-            // if there is only one page, create single page render when need
-            else if (!(mPageRender instanceof SinglePageRender)) {
-                mPageRender.release();
-                mPageRender = new SinglePageRender(getContext(),
-                        mPageFlip,
-                        mHandler,
-                        pageNo, null);
-            }
+//            if (mPageFlip.getSecondPage() != null && width > height) {
+//                if (!(mPageRender instanceof DoublePagesRender)) {
+//                    mPageRender.release();
+//                    mPageRender = new DoublePagesRender(getContext(),
+//                            mPageFlip,
+//                            mHandler,
+//                            pageNo, null);
+//                }
+//            }
+//            // if there is only one page, create single page render when need
+//            else if (!(mPageRender instanceof SinglePageRender)) {
+//                mPageRender.release();
+//                mPageRender = new SinglePageRender(getContext(),
+//                        mPageFlip,
+//                        mHandler,
+//                        pageNo, null);
+//            }
 
             // let page render handle surface change
             mPageRender.onSurfaceChanged(width, height);

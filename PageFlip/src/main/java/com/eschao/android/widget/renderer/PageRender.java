@@ -23,7 +23,7 @@ import android.os.Message;
 
 import com.eschao.android.widget.pageflip.OnPageFlipListener;
 import com.eschao.android.widget.pageflip.PageFlip;
-import com.eschao.android.widget.view.Provider;
+import com.eschao.android.widget.view.provider.ContentProvider;
 
 /**
  * Abstract Page Render
@@ -50,11 +50,11 @@ public abstract class PageRender implements OnPageFlipListener {
     public Context mContext;
     public Handler mHandler;
     public PageFlip mPageFlip;
-    public Provider pageProvider;
+    public ContentProvider pageContentProvider;
 
     public PageRender(Context context, PageFlip pageFlip,
                       Handler handler, int pageNo,
-                      final Provider pageProvider) {
+                      final ContentProvider pageContentProvider) {
         mContext = context;
         mPageFlip = pageFlip;
         mPageNo = pageNo;
@@ -62,7 +62,7 @@ public abstract class PageRender implements OnPageFlipListener {
         mCanvas = new Canvas();
         mPageFlip.setListener(this);
         mHandler = handler;
-        this.pageProvider = pageProvider;
+        this.pageContentProvider = pageContentProvider;
     }
 
     /**

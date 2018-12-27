@@ -2,6 +2,7 @@ package com.sixfingers.bp.player;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import java.util.LinkedList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /***
@@ -27,6 +27,7 @@ public class TestImagePowerEbook extends FrameLayout {
     public TestImagePowerEbook(final Context context, int imageResId) {
         super(context);
         setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        setBackgroundColor(Color.argb(1, 44, 4, 4));
         createBackground(imageResId);
         bgImgView.setScaleType(ImageView.ScaleType.FIT_XY);
         addView(bgImgView, 0, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));

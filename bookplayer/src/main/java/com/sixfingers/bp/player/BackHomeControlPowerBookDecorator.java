@@ -4,6 +4,9 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+/***
+ *
+ */
 public class BackHomeControlPowerBookDecorator extends PowerEbookDecorator {
 
 

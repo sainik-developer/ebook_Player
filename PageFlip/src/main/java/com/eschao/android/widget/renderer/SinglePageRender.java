@@ -25,7 +25,7 @@ import android.os.Handler;
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipState;
-import com.eschao.android.widget.view.Provider;
+import com.eschao.android.widget.view.provider.ContentProvider;
 
 /**
  * Single page render
@@ -41,7 +41,6 @@ import com.eschao.android.widget.view.Provider;
  *
  * @author eschao
  */
-
 public class SinglePageRender extends PageRender {
 
     /**
@@ -50,8 +49,8 @@ public class SinglePageRender extends PageRender {
      * @see {@link PageRender(Context, PageFlip, Handler, int)}
      */
     public SinglePageRender(Context context, PageFlip pageFlip,
-                            Handler handler, int pageNo, final Provider pageProvider) {
-        super(context, pageFlip, handler, pageNo, pageProvider);
+                            Handler handler, int pageNo, final ContentProvider pageContentProvider) {
+        super(context, pageFlip, handler, pageNo, pageContentProvider);
     }
 
     /**
@@ -170,7 +169,7 @@ public class SinglePageRender extends PageRender {
         p.setFilterBitmap(true);
 
         // 1. draw background bitmap
-        Bitmap background = pageProvider.getBackgroundBitmap(mPageNo);
+        Bitmap background = pageContentProvider.getBackgroundBitmap(height, width, mPageNo);
         Rect rect = new Rect(0, 0, width, height);
         mCanvas.drawBitmap(background, null, rect, p);
         background.recycle();

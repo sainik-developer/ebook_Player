@@ -15,10 +15,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        PowerEbookDecorator view = new PlayPauseControlPowerBookDecorator(
-//                new BackHomeControlPowerBookDecorator(
-        PowerEbookDecorator view = new PlayPauseControlPowerBookDecorator(new PortraitControlPowerBookDecorator(new BackHomeControlPowerBookDecorator(
-                new TestImagePowerEbook(this, R.drawable.test))));
+        PowerEbookDecorator view = new PlayPauseControlPowerBookDecorator(
+                new PortraitControlPowerBookDecorator(
+                        new BackHomeControlPowerBookDecorator(
+                                new TestImagePowerEbook(this, R.drawable.test))));
         addContentView(view.frameLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }
