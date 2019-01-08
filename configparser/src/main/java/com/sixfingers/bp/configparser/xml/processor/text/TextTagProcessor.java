@@ -55,6 +55,7 @@ public class TextTagProcessor extends TagProcessor<Text, Text> {
         text.fontNumber = Integer.valueOf(getAttributeValue(parser, ns, "fontNumber", Text.DEFAULT_FONT_NUMBER));
         text.textAlign = TextAlign.valueOf(getAttributeValue(parser, ns, "textAlign", Text.DEFAULT_FONT_ALIGN));
         text.border = Border.valueOf(getAttributeValue(parser, ns, "border", Text.DEFAULT_BORDER));
+        text.paragraphSpacing = Integer.valueOf(getAttributeValue(parser, ns, "pg-sp", Text.DEFAULT_PARAGRAPH_SPACING));
         text.backGroudColor = Integer.parseInt(getAttributeValue(parser, ns, "bg-color", Text.DEFAULT_BG_COLOR));
         text.position = new Position(parser.getAttributeValue(ns, "position"));
         text.textColor = Integer.parseInt(getAttributeValue(parser, ns, "text-color", Text.DEFAULT_TEXT_COLOR));
