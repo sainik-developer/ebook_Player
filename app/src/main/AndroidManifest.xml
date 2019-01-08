@@ -35,12 +35,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".album.AlbumActivity"></activity>
+        <activity
+            android:name=".album.AlbumActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".player.PlayerActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
-
-
 </manifest>

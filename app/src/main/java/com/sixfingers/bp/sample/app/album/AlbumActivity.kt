@@ -48,7 +48,7 @@ class AlbumActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
 
-    fun createIntent(orientation: Int): Intent {
+    private fun createIntent(orientation: Int): Intent {
         val intent = Intent(this, PlayerActivity::class.java)
         intent.putExtra(PlayerActivity.BASE_EBOOK_KEY, PlayerActivity.BASE_EBOOK_IMAGE)
         intent.putExtra(PlayerActivity.DECORATOR_KEYS, arrayOf(PlayerActivity.FEATURE_BACK_HOME, PlayerActivity.FEATURE_PLAY_PAUSE))
