@@ -35,7 +35,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        compositeDisposable = CompositeDisposable()
+        progressBar = findViewById(R.id.progressBar)
         viewModel = ViewModelProviders.of(this).get(SplashMvvm::class.java)
         viewModel.requestPermissionIfRequired(this)
     }
