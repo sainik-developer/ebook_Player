@@ -12,7 +12,7 @@ public class PlayPauseControlPowerBookDecorator extends PowerEbookDecorator {
     public PlayPauseControlPowerBookDecorator(final ViewGroup viewGroup) {
         super(viewGroup);
         inflate(viewGroup.getContext(), R.layout.play_pause_control_panel, this);
-        frameLayout.addView(this, new FrameLayout.LayoutParams(100,
-                100, Gravity.TOP | Gravity.END));
+        frameLayout.addView(this, new FrameLayout.LayoutParams(getScreenWidthByPercentage(7),
+                getScreenHeightByPercentage(7), Gravity.CENTER));
     }
 }

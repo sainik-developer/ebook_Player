@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">bookplayer</string>
     <string name="home">home</string>
+    <string name="portrait"> Portrait Book</string>
+    <string name="lanscape"> Landscape Book</string>
     <string name="dc">dc</string>
+    <string name="pageno">1..2</string>
+    <string-array name="planets_array">
+        <item>Mer</item>
+        <item>Ven</item>
+        <item>Ear</item>
+        <item>Mar</item>
+        <item>Jup</item>
+        <item>Sat</item>
+        <item>Ura</item>
+        <item>Nep</item>
+    </string-array>
 </resources>
