@@ -8,6 +8,7 @@
         android:layout_height="0dp"
         android:contentDescription="@string/dc"
         android:scaleType="fitXY"
+        android:background="@color/book_view_control_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
-
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -8,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.02" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline7"
@@ -32,100 +31,123 @@
         app:layout_constraintGuide_percent="0.80" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@id/id_language"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="center"
+        android:background="@color/book_view_control_color"
+        android:popupBackground="@color/book_view_control_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@id/id_speed_spinner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="center"
+        android:background="@color/book_view_control_color"
+        android:gravity="center_horizontal"
+        android:popupBackground="@color/book_view_control_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@id/id_pageno"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton14"
+        app:layout_constraintEnd_toStartOf="@id/id_nextpage"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButton13"
+        app:layout_constraintStart_toEndOf="@id/id_prevPage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton12"
+        android:id="@id/id_firstPage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton13"
+        android:background="@color/book_view_control_color"
+        android:contentDescription="@string/dc"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
+        app:layout_constraintEnd_toStartOf="@id/id_prevPage"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/guideline8"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_first" />
 
     <ImageButton
-        android:id="@+id/imageButton13"
+        android:id="@id/id_prevPage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        android:background="@color/book_view_control_color"
+        android:contentDescription="@string/dc"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
+        app:layout_constraintEnd_toStartOf="@id/id_pageno"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButton12"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@id/id_firstPage"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_prev" />
 
     <ImageButton
-        android:id="@+id/imageButton14"
+        android:id="@id/id_nextpage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton15"
+        android:background="@color/book_view_control_color"
+        android:contentDescription="@string/dc"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
+        app:layout_constraintEnd_toStartOf="@id/id_lastpage"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@id/id_pageno"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_next" />
 
     <ImageButton
-        android:id="@+id/imageButton15"
+        android:id="@id/id_lastpage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        android:background="@color/book_view_control_color"
+        android:contentDescription="@string/dc"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButton14"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@id/id_nextpage"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_last" />
 
     <ImageButton
-        android:id="@+id/imageButton16"
+        android:id="@id/id_lock"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/book_view_control_color"
+        android:contentDescription="@string/dc"
+        android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner4"
+        app:layout_constraintStart_toEndOf="@id/id_speed_spinner"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_lock" />
 

@@ -1,46 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+
+    <!--<merge xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools">-->
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.02" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.98" />
 
     <TextView
-        android:id="@+id/pageno"
+        android:id="@id/id_pageno"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/book_view_control_color"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton11"
+        app:layout_constraintEnd_toStartOf="@id/id_lastpage"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButton9"
+        app:layout_constraintStart_toEndOf="@id/id_firstPage"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/pageno" />
 
     <Spinner
-        android:id="@+id/language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@id/id_language"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/book_view_control_color"
         android:gravity="center"
+        android:popupBackground="@color/book_view_control_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -51,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline6"
@@ -61,14 +71,14 @@
         app:layout_constraintGuide_percent="0.80" />
 
     <ImageButton
-        android:id="@+id/imageButton8"
-        android:layout_width="wrap_content"
+        android:id="@id/id_lock"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
+        android:background="@color/book_view_control_color"
         android:contentDescription="@string/dc"
-        android:tint="@color/book_view_control_color"
+        android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -76,31 +86,34 @@
         app:srcCompat="@drawable/ic_lock" />
 
     <ImageButton
-        android:id="@+id/imageButton9"
+        android:id="@id/id_firstPage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
+        android:background="@color/book_view_control_color"
         android:contentDescription="@string/dc"
-        android:tint="@color/book_view_control_color"
-        app:layout_constraintBottom_toBottomOf="@+id/pageno"
-        app:layout_constraintEnd_toStartOf="@+id/pageno"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
+        app:layout_constraintEnd_toStartOf="@id/id_pageno"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/language"
-        app:layout_constraintTop_toTopOf="@+id/pageno"
+        app:layout_constraintStart_toEndOf="@id/id_language"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_first" />
 
     <ImageButton
-        android:id="@+id/imageButton11"
+        android:id="@id/id_lastpage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
+        android:background="@color/book_view_control_color"
         android:contentDescription="@string/dc"
-        android:tint="@color/book_view_control_color"
-        app:layout_constraintBottom_toBottomOf="@+id/pageno"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton8"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/id_pageno"
+        app:layout_constraintEnd_toStartOf="@id/id_lock"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pageno"
-        app:layout_constraintTop_toTopOf="@+id/pageno"
+        app:layout_constraintStart_toEndOf="@id/id_pageno"
+        app:layout_constraintTop_toTopOf="@id/id_pageno"
         app:srcCompat="@drawable/ic_last" />
 
-</merge><!--</android.support.constraint.ConstraintLayout>-->
+    <!--</merge>-->
+</android.support.constraint.ConstraintLayout>

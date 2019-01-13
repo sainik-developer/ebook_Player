@@ -17,9 +17,10 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
-import com.sixfingers.bp.player.BackHomeControlPowerBookDecorator
-import com.sixfingers.bp.player.PlayPauseControlPowerBookDecorator
-import com.sixfingers.bp.player.PowerEbookDecorator
+import com.sixfingers.bp.player.features.BackHomeControlPowerBookDecorator
+import com.sixfingers.bp.player.features.PlayPauseControlPowerBookDecorator
+import com.sixfingers.bp.player.features.PowerEbookDecorator
+import com.sixfingers.bp.player.features.ThumbnailPowerEBookDecorator
 import com.sixfingers.bp.player.image.TestImagePowerEbook
 import com.sixfingers.bp.player.landscape.LandScapeControlPowerBookDecorator
 import com.sixfingers.bp.player.porttrait.PortraitControlPowerBookDecorator
@@ -35,14 +36,16 @@ class PlayerActivity : AppCompatActivity() {
         val PLAYER_ORIENTATION = "PLAYER_ORIENTATION"
         val FEATURE_PLAY_PAUSE = "FEATURE_PLAY_PAUSE"
         val FEATURE_BACK_HOME = "FEATURE_BACK_HOME"
+        val FEATURE_THUMBNAIL = "FEATURE_THUMBNAIL"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = createView()
-        addContentView(view!!.frameLayout, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         val orientation = intent?.extras?.getInt(PLAYER_ORIENTATION)
         requestedOrientation = orientation!!.or(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        val view = createView()
+        addContentView(view!!.frameLayout, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
     /***
@@ -60,7 +63,7 @@ class PlayerActivity : AppCompatActivity() {
      *
      */
     fun decorateeViews(view: ViewGroup): PowerEbookDecorator? {
-        val others = intent?.extras?.getStringArrayList(DECORATOR_KEYS)
+        val others = intent?.extras?.getStringArray(DECORATOR_KEYS)
         var resultView: ViewGroup = view
         when (requestedOrientation) {
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT -> resultView = PortraitControlPowerBookDecorator(resultView)
@@ -70,6 +73,7 @@ class PlayerActivity : AppCompatActivity() {
             when (item!!) {
                 FEATURE_PLAY_PAUSE -> resultView = PlayPauseControlPowerBookDecorator(resultView)
                 FEATURE_BACK_HOME -> resultView = BackHomeControlPowerBookDecorator(resultView)
+                FEATURE_THUMBNAIL -> resultView = ThumbnailPowerEBookDecorator(resultView)
             }
         }
         return when (resultView) { is PowerEbookDecorator -> resultView
