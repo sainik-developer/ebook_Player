@@ -13,9 +13,14 @@
 
 package com.sixfingers.bp.player.features;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.sixfingers.bp.player.R;
 
@@ -32,5 +37,37 @@ public class BackHomeControlPowerBookDecorator extends PowerEbookDecorator {
         layoutParams.setMargins(getScreenWidthByPercentage(1.0f),
                 getScreenHeightByPercentage(1.0f), 0, 0);
         frameLayout.addView(this, layoutParams);
+        final ImageView backHomeButton = findViewById(R.id.id_back_home);
+        backHomeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (frameLayout.getContext() instanceof Activity) {
+                    ((Activity) frameLayout.getContext()).finish();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void revealView() {
+        this.setAlpha(0f);
+        this.setVisibility(View.VISIBLE);
+        this.animate()
+                .alpha(1f)
+                .setDuration(1000)
+                .setListener(null);
+    }
+
+    @Override
+    public void hideView() {
+        this.animate()
+                .alpha(0f)
+                .setDuration(1000)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        BackHomeControlPowerBookDecorator.this.setVisibility(View.GONE);
+                    }
+                });
     }
 }

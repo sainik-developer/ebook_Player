@@ -22,4 +22,7 @@
     <item name="id_prevPage" type="id"/>
     <item name="id_firstPage" type="id"/>
     <item name="id_speed_spinner" type="id"/>
+    <item name="id_play_pause" type="id"/>
+    <item name="id_thumbnail" type="id"/>
+    <item name="id_back_home" type="id"/>
 </resources>

@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 /***
  *
  */
-public class PowerEbookDecorator extends ConstraintLayout {
+public abstract class PowerEbookDecorator extends ConstraintLayout {
 
     public FrameLayout frameLayout;
 
@@ -51,4 +51,8 @@ public class PowerEbookDecorator extends ConstraintLayout {
         return (int) ((displayMetrics.heightPixels > displayMetrics.widthPixels ?
                 displayMetrics.heightPixels : displayMetrics.widthPixels) * (percentage / 100));
     }
+
+    public abstract void revealView();
+
+    public abstract void hideView();
 }

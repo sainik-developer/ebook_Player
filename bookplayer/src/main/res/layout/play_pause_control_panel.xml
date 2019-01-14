@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
-        android:id="@+id/imageButton10"
+        android:id="@id/id_play_pause"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/dc"
         android:scaleType="fitXY"
-        android:background="@color/book_view_control_color"
+        android:background="@drawable/button_effect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -17,7 +17,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_weight="1.0"
-    android:background="@color/book_view_control_color"
+    android:background="@drawable/button_effect"
     android:orientation="horizontal">
 
     <TextView

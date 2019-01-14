@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.sixfingers.bp.player.features.PowerEbookDecorator;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class TestImagePowerEbook extends FrameLayout {
 
     public ImageView bgImgView;
     private int controlVisibility = VISIBLE;
-    private List<View> allChildrenViews;
+    private List<PowerEbookDecorator> allChildrenViews;
 
     public TestImagePowerEbook(final Context context, int imageResId) {
         super(context);
@@ -50,23 +52,29 @@ public class TestImagePowerEbook extends FrameLayout {
         bgImgView.setImageDrawable(getResources().getDrawable(imageResId));
     }
 
-    private void toggleVisibilityViews(List<View> views) {
-        for (View view : views) {
-            view.setVisibility(controlVisibility);
+    private void toggleVisibilityViews(List<PowerEbookDecorator> views) {
+        for (PowerEbookDecorator view : views) {
+            switch (view.getVisibility()) {
+                case VISIBLE:
+                    view.hideView();
+                    break;
+                case GONE:
+                case INVISIBLE:
+                    view.revealView();
+                    break;
+                default:
+
+            }
         }
-        determineAndSetNextControlVisibility();
     }
 
-    private void determineAndSetNextControlVisibility() {
-        controlVisibility = controlVisibility == VISIBLE ? GONE : VISIBLE;
-    }
-
-
-    private List<View> getAllChildrenButFirst() {
+    private List<PowerEbookDecorator> getAllChildrenButFirst() {
         int count = getChildCount();
-        List<View> viewList = new LinkedList<>();
+        List<PowerEbookDecorator> viewList = new LinkedList<>();
         for (int i = 1; i < count; i++) {
-            viewList.add(getChildAt(i));
+            if (getChildAt(i) instanceof PowerEbookDecorator) {
+                viewList.add((PowerEbookDecorator) getChildAt(i));
+            }
         }
         return viewList;
     }

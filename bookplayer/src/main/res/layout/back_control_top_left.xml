@@ -4,11 +4,11 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@id/id_back_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
-        android:background="@color/book_view_control_color"
+        android:background="@drawable/button_effect"
         android:contentDescription="@string/dc"
         android:tint="@android:color/white"
         android:scaleType="fitXY"

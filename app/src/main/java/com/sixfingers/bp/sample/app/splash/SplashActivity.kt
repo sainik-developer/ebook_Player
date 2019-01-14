@@ -31,14 +31,17 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var viewModel: SplashMvvm
     private lateinit var progressBar: ProgressBar
     private lateinit var compositeDisposable: CompositeDisposable
+    private lateinit var progressSubject: PublishSubject<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         compositeDisposable = CompositeDisposable()
+        progressSubject = prepareProgress()
         progressBar = findViewById(R.id.progressBar)
         viewModel = ViewModelProviders.of(this).get(SplashMvvm::class.java)
-        viewModel.requestPermissionIfRequired(this)
+        compositeDisposable.add(viewModel.requestPermissionIfRequired(this, progressSubject).subscribe())
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -48,24 +51,7 @@ class SplashActivity : AppCompatActivity() {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    val pubSub: PublishSubject<Int> = PublishSubject.create()
-                    compositeDisposable.add(pubSub
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnNext { t: Int ->
-                                progressBar.progress = t
-                                progressBar.invalidate()
-                            }
-                            .doOnError { t: Throwable ->
-                                Toast.makeText(applicationContext, "There was problem in initializing app", Toast.LENGTH_LONG).show()
-                            }
-                            .doOnComplete {
-                                progressBar.progress = 100
-                                progressBar.invalidate()
-                                viewModel.goToNextActivity(this)
-                            }
-                            .subscribe())
-                    compositeDisposable.add(this.viewModel.copyAssetToStorage(this, pubSub).subscribe())
+                    compositeDisposable.add(this.viewModel.copyAssetToStorage(this, progressSubject).subscribe())
                 } else {
                     Toast.makeText(applicationContext, "Required permission not given to app", Toast.LENGTH_LONG).show()
                     finish()
@@ -75,6 +61,26 @@ class SplashActivity : AppCompatActivity() {
                 return
             }
         }
+    }
+
+    private fun prepareProgress(): PublishSubject<Int> {
+        val pubSub: PublishSubject<Int> = PublishSubject.create()
+        compositeDisposable.add(pubSub.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { t: Int ->
+                    progressBar.progress = t
+                    progressBar.invalidate()
+                }
+                .doOnError { t: Throwable ->
+                    Toast.makeText(applicationContext, "There was problem in initializing app", Toast.LENGTH_LONG).show()
+                }
+                .doOnComplete {
+                    progressBar.progress = 100
+                    progressBar.invalidate()
+                    viewModel.goToNextActivity(this)
+                }
+                .subscribe())
+        return pubSub
     }
 
     override fun onDestroy() {

@@ -13,5 +13,9 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item android:drawable="@drawable/control_selected_bg" android:state_activated="true"  />
+    <item android:drawable="@drawable/control_selected_bg" android:state_selected="true"  />
+    <item android:drawable="@drawable/control_selected_bg" android:state_checked="true"  />
+    <item android:drawable="@drawable/control_selected_bg" android:state_checkable="true"  />
+    <item android:drawable="@drawable/control_normal_bg" />
 </selector>
