@@ -10,6 +10,7 @@ import com.eschao.android.widget.view.provider.ContentProvider;
 import com.sixfingers.bp.model.Book;
 import com.sixfingers.bp.model.Page;
 
+import java.io.File;
 import java.util.Locale;
 
 /***
@@ -34,10 +35,20 @@ public class FileSystemContentProvider implements ContentProvider {
         }
     };
 
-    public FileSystemContentProvider(final Book book, final Locale locale) {
+//    public FileSystemContentProvider(final Book book, final Locale locale) {
+//        this.book = book;
+//        this.locale = locale;
+//        this.basePath = book.globalProp.basePath;
+//    }
+
+    public FileSystemContentProvider(final Book book, final String fileSystemBasePath) {
+        this(book, Locale.ENGLISH, fileSystemBasePath);
+    }
+
+    public FileSystemContentProvider(final Book book, final Locale locale, final String fileSystemBasePath) {
         this.book = book;
         this.locale = locale;
-        this.basePath = book.globalProp.basePath;
+        this.basePath = book.globalProp.basePath = fileSystemBasePath;
     }
 
     @Override
@@ -50,7 +61,7 @@ public class FileSystemContentProvider implements ContentProvider {
             Canvas bgCanvas = new Canvas(bgBitmap);
 
             Drawable bitmapDrawable =
-                    BitmapDrawable.createFromPath(basePath + requestPage.backgroundImageName);
+                    BitmapDrawable.createFromPath(basePath + File.separator + requestPage.backgroundImageName);
             if (bitmapDrawable != null) {
                 bitmapDrawable.setBounds(0, 0, width, height);
                 bitmapDrawable.draw(bgCanvas);

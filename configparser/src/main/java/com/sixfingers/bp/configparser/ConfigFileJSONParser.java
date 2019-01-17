@@ -26,7 +26,6 @@ public class ConfigFileJSONParser implements Parser<InputStream, Book> {
     private Gson gson;
     private Parser<String, Content> contentParser;
 
-
     public ConfigFileJSONParser() {
         this.contentParser = new ContentXMLParser();
         GsonBuilder gsonBuilder = new GsonBuilder();

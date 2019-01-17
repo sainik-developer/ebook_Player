@@ -13,17 +13,18 @@ public class Page {
 
 
     public List<?> getBySubType(final Class<? extends Content> aClass) {
-        if (aClass.getTypeName().equals(Text.class.getTypeName())) {
+        if (aClass.getName().equals(Text.class.getName())) {
             List<Text> texts = new LinkedList<>();
             for (Content content : contents) {
-                if (contents instanceof Text) {
+                if (content instanceof Text) {
                     texts.add((Text) content);
                 }
             }
+            return texts;
         } else if (aClass.getTypeName().equals(Audio.class.getTypeName())) {
             List<Audio> audios = new LinkedList<>();
             for (Content content : contents) {
-                if (contents instanceof Audio) {
+                if (content instanceof Audio) {
                     audios.add((Audio) content);
                 }
             }

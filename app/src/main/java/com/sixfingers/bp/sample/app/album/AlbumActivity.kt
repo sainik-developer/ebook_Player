@@ -35,10 +35,16 @@ class AlbumActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_album)
         setSupportActionBar(toolbar)
         findViewById<ImageButton>(R.id.port).setOnClickListener {
-            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, Type.IMAGE))
         }
         findViewById<ImageButton>(R.id.land).setOnClickListener {
-            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
+            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, Type.IMAGE))
+        }
+        findViewById<ImageButton>(R.id.playerland).setOnClickListener {
+            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, Type.PLAYER))
+        }
+        findViewById<ImageButton>(R.id.playerport).setOnClickListener {
+            startActivity(createIntent(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, Type.PLAYER))
         }
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -48,13 +54,20 @@ class AlbumActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
 
-    private fun createIntent(orientation: Int): Intent {
+    private fun createIntent(orientation: Int, type: Type): Intent {
         val intent = Intent(this, PlayerActivity::class.java)
-        intent.putExtra(PlayerActivity.BASE_EBOOK_KEY, PlayerActivity.BASE_EBOOK_IMAGE)
-        val features: Array<String> = arrayOf(PlayerActivity.FEATURE_BACK_HOME,
-                PlayerActivity.FEATURE_PLAY_PAUSE,
-                PlayerActivity.FEATURE_THUMBNAIL)
-        intent.putExtra(PlayerActivity.DECORATOR_KEYS, features)
+        when (type) {
+            Type.IMAGE -> {
+                intent.putExtra(PlayerActivity.BASE_EBOOK_KEY, PlayerActivity.BASE_EBOOK_IMAGE)
+                val features: Array<String> = arrayOf(PlayerActivity.FEATURE_BACK_HOME,
+                        PlayerActivity.FEATURE_PLAY_PAUSE,
+                        PlayerActivity.FEATURE_THUMBNAIL)
+                intent.putExtra(PlayerActivity.DECORATOR_KEYS, features)
+            }
+            Type.PLAYER -> {
+                intent.putExtra(PlayerActivity.BASE_EBOOK_KEY, PlayerActivity.BASE_EBOOK_PLAYER)
+            }
+        }
         intent.putExtra(PlayerActivity.PLAYER_ORIENTATION, orientation)
         return intent
     }
@@ -65,6 +78,10 @@ class AlbumActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         } else {
             super.onBackPressed()
         }
+    }
+
+    enum class Type {
+        IMAGE, PLAYER
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {

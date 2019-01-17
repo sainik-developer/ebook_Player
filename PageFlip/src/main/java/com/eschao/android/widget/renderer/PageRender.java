@@ -33,60 +33,18 @@ import com.eschao.android.widget.view.provider.ContentProvider;
 
 public abstract class PageRender implements OnPageFlipListener {
 
-    public final static int MSG_ENDED_DRAWING_FRAME = 1;
-    private final static String TAG = "PageRender";
-
-    final static int DRAW_MOVING_FRAME = 0;
-    final static int DRAW_ANIMATING_FRAME = 1;
-    final static int DRAW_FULL_PAGE = 2;
-
-    final static int MAX_PAGES = 30;
-
-    public int mPageNo;
-    public int mDrawCommand;
-    public Bitmap mBitmap;
-    public Canvas mCanvas;
-    public Bitmap mBackgroundBitmap;
-    public Context mContext;
-    public Handler mHandler;
-    public PageFlip mPageFlip;
-    public ContentProvider pageContentProvider;
-
-    public PageRender(Context context, PageFlip pageFlip,
-                      Handler handler, int pageNo,
-                      final ContentProvider pageContentProvider) {
-        mContext = context;
-        mPageFlip = pageFlip;
-        mPageNo = pageNo;
-        mDrawCommand = DRAW_FULL_PAGE;
-        mCanvas = new Canvas();
-        mPageFlip.setListener(this);
-        mHandler = handler;
-        this.pageContentProvider = pageContentProvider;
-    }
-
     /**
      * Get page number
      *
      * @return page number
      */
-    public int getPageNo() {
-        return mPageNo;
-    }
+    public abstract int getPageNo();
+
 
     /**
      * Release resources
      */
-    public void release() {
-        if (mBitmap != null) {
-            mBitmap.recycle();
-            mBitmap = null;
-        }
-
-        mPageFlip.setListener(null);
-        mCanvas = null;
-        mBackgroundBitmap = null;
-    }
+    public abstract void release();
 
     /**
      * Handle finger moving event
@@ -95,10 +53,7 @@ public abstract class PageRender implements OnPageFlipListener {
      * @param y y coordinate of finger moving
      * @return true if event is handled
      */
-    public boolean onFingerMove(float x, float y) {
-        mDrawCommand = DRAW_MOVING_FRAME;
-        return true;
-    }
+    public abstract boolean onFingerMove(float x, float y);
 
     /**
      * Handle finger up event
@@ -107,22 +62,8 @@ public abstract class PageRender implements OnPageFlipListener {
      * @param y y coordinate of inger up
      * @return true if event is handled
      */
-    public boolean onFingerUp(float x, float y) {
-        if (mPageFlip.animating()) {
-            mDrawCommand = DRAW_ANIMATING_FRAME;
-            return true;
-        }
+    public abstract boolean onFingerUp(float x, float y);
 
-        return false;
-    }
-
-    /**
-     * Calculate font size by given SP unit
-     */
-    protected int calcFontSize(int size) {
-        return (int) (size * mContext.getResources().getDisplayMetrics()
-                .scaledDensity);
-    }
 
     /***
      * send message to main thread to notify drawing is ended so that
@@ -130,17 +71,14 @@ public abstract class PageRender implements OnPageFlipListener {
      * Remember: the drawing operation is always in GL thread instead of
      * main thread
      */
-    public void sendMesaageDrawingFinished() {
-        Message msg = Message.obtain();
-        msg.what = MSG_ENDED_DRAWING_FRAME;
-        msg.arg1 = mDrawCommand;
-        mHandler.sendMessage(msg);
-    }
+    public abstract void sendMesaageDrawingFinished();
 
     /**
      * Render page frame
      */
     public abstract void onDrawFrame();
+
+//    public abstract void reflectDrawFrame();
 
     /**
      * Handle surface changing event

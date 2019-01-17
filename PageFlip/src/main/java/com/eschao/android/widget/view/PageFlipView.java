@@ -26,9 +26,11 @@ import android.util.Log;
 
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipException;
+import com.eschao.android.widget.renderer.BasePageRender;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
+import com.eschao.android.widget.renderer.feature.TextPageRenderDecorator;
 import com.eschao.android.widget.view.provider.ContentProvider;
 import com.eschao.android.widget.view.provider.ContentProviderBuilder;
 import com.sixfingers.bp.model.Book;
@@ -42,7 +44,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Page flip view
  *
- * @author eschao
+ * @author sainik
  */
 public class PageFlipView extends GLSurfaceView implements Renderer {
 
@@ -58,11 +60,21 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     ReentrantLock mDrawLock;
     ContentProvider contentProvider;
 
+    /****
+     *
+     * @param context
+     * @param type
+     * @param book
+     * @param contentProviderBuilder
+     */
     public PageFlipView(final Context context,
                         final PageFlipViewType type,
                         final Book book,
                         final ContentProviderBuilder contentProviderBuilder) {
         super(context);
+        if (type == null || book == null || contentProviderBuilder == null) {
+            throw new IllegalArgumentException("either type, book or contentProviderBuilder is null");
+        }
         this.type = type;
         this.book = book;
         contentProvider = prepareContentProvider(contentProviderBuilder);
@@ -95,7 +107,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         setEGLContextClientVersion(2);
 
         // init others
-        mPageNo = 1;
+        mPageNo = 0;
         mDrawLock = new ReentrantLock();
         preparePageRenderer();
         // configure render
@@ -107,7 +119,6 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     private ContentProvider prepareContentProvider(final ContentProviderBuilder builder) {
         return builder
                 .setBook(book)
-                .setLocale(Locale.ENGLISH)
                 .setPageFlipView(this)
                 .build();
     }
@@ -133,39 +144,6 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     public boolean isAutoPageEnabled() {
         return mPageFlip.isAutoPageEnabled();
     }
-
-    /**
-     * Enable/Disable auto page mode
-     *
-     * @param enable true is enable
-     */
-//    public void enableAutoPage(boolean enable) {
-//        if (mPageFlip.enableAutoPage(enable)) {
-//            try {
-//                mDrawLock.lock();
-//                if (mPageFlip.getSecondPage() != null &&
-//                        mPageRender instanceof SinglePageRender) {
-//                    mPageRender = new DoublePagesRender(getContext(),
-//                            mPageFlip,
-//                            mHandler,
-//                            mPageNo);
-//                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
-//                            mPageFlip.getSurfaceHeight());
-//                } else if (mPageFlip.getSecondPage() == null &&
-//                        mPageRender instanceof DoublePagesRender) {
-//                    mPageRender = new SinglePageRender(getContext(),
-//                            mPageFlip,
-//                            mHandler,
-//                            mPageNo);
-//                    mPageRender.onSurfaceChanged(mPageFlip.getSurfaceWidth(),
-//                            mPageFlip.getSurfaceHeight());
-//                }
-//                requestRender();
-//            } finally {
-//                mDrawLock.unlock();
-//            }
-//        }
-//    }
 
     /**
      * Get duration of animating
@@ -242,7 +220,8 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
      * @param x finger x coordinate
      * @param y finger y coordinate
      */
-    public void onFingerUp(float x, float y) {
+    public boolean onFingerUp(float x, float y) {
+        boolean isEventConsumed = false;
         if (!mPageFlip.isAnimating()) {
             mPageFlip.onFingerUp(x, y, mDuration);
             try {
@@ -250,11 +229,13 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
                 if (mPageRender != null &&
                         mPageRender.onFingerUp(x, y)) {
                     requestRender();
+                    isEventConsumed = true;
                 }
             } finally {
                 mDrawLock.unlock();
             }
         }
+        return isEventConsumed;
     }
 
     /**
@@ -276,7 +257,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     }
 
     /**
-     * Handle surface is changed
+     * Handle surface is changed TODO remove this function for now
      *
      * @param gl     OpenGL handle
      * @param width  new width of surface
@@ -338,7 +319,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case PageRender.MSG_ENDED_DRAWING_FRAME:
+                    case BasePageRender.MSG_ENDED_DRAWING_FRAME:
                         try {
                             mDrawLock.lock();
                             // notify page render to handle ended drawing

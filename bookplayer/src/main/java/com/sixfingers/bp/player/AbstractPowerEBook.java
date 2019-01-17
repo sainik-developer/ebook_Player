@@ -1,38 +1,33 @@
-package com.sixfingers.bp.player.image;
+/*
+ * Copyright 2019 sixfingers.com. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.sixfingers.bp.player;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
-import com.sixfingers.bp.player.AbstractPowerEBook;
 import com.sixfingers.bp.player.features.PowerEbookDecorator;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+public abstract class AbstractPowerEBook extends FrameLayout {
 
-/***
- * This is the test Power Ebook for testing, Just to test verious position
- * of control and their appearance and animation.
- */
-public class TestImagePowerEbook extends AbstractPowerEBook {
-
-    public ImageView bgImgView;
     private List<PowerEbookDecorator> allChildrenViews;
 
-    public TestImagePowerEbook(final Context context, int imageResId) {
+    protected AbstractPowerEBook(final Context context) {
         super(context);
-        setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
-        setBackgroundColor(Color.argb(1, 44, 4, 4));
-        createBackground(imageResId);
-        addView(bgImgView, 0, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER));
-        setSystemUiVisibility(SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     @Override
@@ -43,13 +38,6 @@ public class TestImagePowerEbook extends AbstractPowerEBook {
             toggleVisibilityViews(getAllChildrenButFirst());
         }
         return true;
-    }
-
-    private void createBackground(int imageResId) {
-        bgImgView = new ImageView(getContext());
-        bgImgView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
-        bgImgView.setImageDrawable(getResources().getDrawable(imageResId));
-        bgImgView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     private void toggleVisibilityViews(List<PowerEbookDecorator> views) {
@@ -67,6 +55,11 @@ public class TestImagePowerEbook extends AbstractPowerEBook {
             }
         }
     }
+
+    private List<PowerEbookDecorator> getAllChildrenViews1() {
+        return allChildrenViews = allChildrenViews == null ? getAllChildrenButFirst() : allChildrenViews;
+    }
+
 
     private List<PowerEbookDecorator> getAllChildrenButFirst() {
         int count = getChildCount();

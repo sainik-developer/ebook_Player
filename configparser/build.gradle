@@ -69,8 +69,7 @@ android {
 dependencies {
 
     // Book player dependency
-    implementation 'com.sixfingers.bp:model:1.0'
-
+    implementation project(':model')
 
     // google library dependency
     implementation 'com.google.code.gson:gson:2.8.5'

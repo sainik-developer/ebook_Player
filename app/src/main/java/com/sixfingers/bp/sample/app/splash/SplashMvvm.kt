@@ -35,6 +35,7 @@ class SplashMvvm : ViewModel() {
             val inputStream = appContext.assets.open(it)
             Log.i("SplashMvvm", "the file path is : " + appContext.filesDir.toString())
             Utils.unzip(inputStream, appContext.getExternalFilesDir(null)!!.toString(), pubSub)
+
         }
     }
 
@@ -43,7 +44,7 @@ class SplashMvvm : ViewModel() {
                 .map { progressSub.onNext(10) }
                 .delay(700, TimeUnit.MILLISECONDS)
                 .map {
-                    if (ContextCompat.checkSelfPermission(thisActivity,
+                    if (ContextCompat.checkSelfPermission(thisActivity.applicationContext,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
                         // No explanation needed, we can request the permission.
@@ -52,6 +53,7 @@ class SplashMvvm : ViewModel() {
                                 Utils.MY_PERMISSIONS_REQUEST_READ_CONTACTS)
                     } else {
                         // Permission has already been granted
+                        progressSub.onNext(100)
                         goToNextActivity(thisActivity)
                     }
                 }

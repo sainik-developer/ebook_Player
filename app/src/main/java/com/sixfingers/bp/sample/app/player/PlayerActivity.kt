@@ -16,15 +16,21 @@ package com.sixfingers.bp.sample.app.player
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MotionEvent
 import android.view.ViewGroup
+import com.eschao.android.widget.view.PageFlipView
+import com.sixfingers.bp.configparser.ConfigFileJSONParser
 import com.sixfingers.bp.player.features.BackHomeControlPowerBookDecorator
 import com.sixfingers.bp.player.features.PlayPauseControlPowerBookDecorator
 import com.sixfingers.bp.player.features.PowerEbookDecorator
 import com.sixfingers.bp.player.features.ThumbnailPowerEBookDecorator
 import com.sixfingers.bp.player.image.TestImagePowerEbook
 import com.sixfingers.bp.player.landscape.LandScapeControlPowerBookDecorator
+import com.sixfingers.bp.player.pageflip.PageFlipPowerEBook
 import com.sixfingers.bp.player.porttrait.PortraitControlPowerBookDecorator
 import com.sixfingers.bp.sample.app.R
+import java.io.File
+import java.io.FileInputStream
 
 
 class PlayerActivity : AppCompatActivity() {
@@ -32,12 +38,15 @@ class PlayerActivity : AppCompatActivity() {
     companion object {
         val BASE_EBOOK_KEY = "BASE_EBOOK_KEY"
         val BASE_EBOOK_IMAGE = "BASE_EBOOK_IMAGE"
+        val BASE_EBOOK_PLAYER = "BASE_EBOOK_PLAYER"
         val DECORATOR_KEYS = "DECORATOR_KEYS"
         val PLAYER_ORIENTATION = "PLAYER_ORIENTATION"
         val FEATURE_PLAY_PAUSE = "FEATURE_PLAY_PAUSE"
         val FEATURE_BACK_HOME = "FEATURE_BACK_HOME"
         val FEATURE_THUMBNAIL = "FEATURE_THUMBNAIL"
     }
+
+    private var pageFlipView: PageFlipView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +57,28 @@ class PlayerActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
+    override fun onResume() {
+        super.onResume()
+        pageFlipView!!.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pageFlipView!!.onPause()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        when (event!!.action) {
+            MotionEvent.ACTION_UP -> {
+                pageFlipView!!.onFingerUp(event.x, event.y)
+            }
+
+        }
+        return super.onTouchEvent(event)
+
+    }
+
     /***
      *
      */
@@ -55,6 +86,11 @@ class PlayerActivity : AppCompatActivity() {
         val baseType = intent?.extras?.getString(BASE_EBOOK_KEY)
         when (baseType) {
             BASE_EBOOK_IMAGE -> return decorateeViews(TestImagePowerEbook(this, R.drawable.test))
+            BASE_EBOOK_PLAYER -> {
+                val bookPlayer = createBookPlayer(requestedOrientation)
+                pageFlipView = bookPlayer.pageFlipView
+                return BackHomeControlPowerBookDecorator(bookPlayer)
+            }
             else -> return null
         }
     }
@@ -79,5 +115,12 @@ class PlayerActivity : AppCompatActivity() {
         return when (resultView) { is PowerEbookDecorator -> resultView
             else -> null
         }
+    }
+
+    private fun createBookPlayer(orientation: Int): PageFlipPowerEBook {
+        val bookJsonPath = getExternalFilesDir(null)?.toString() + File.separator + "book_data" + File.separator + "book_data.json"
+        val bookJsonInputStream = FileInputStream(bookJsonPath)
+        val book = ConfigFileJSONParser().parser(bookJsonInputStream)
+        return PageFlipPowerEBook(this, book, getExternalFilesDir(null)?.toString(), orientation)
     }
 }

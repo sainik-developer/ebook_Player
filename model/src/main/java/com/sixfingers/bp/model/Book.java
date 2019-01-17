@@ -1,5 +1,6 @@
 package com.sixfingers.bp.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Book {
         for (Page page : pages)
             if (page.lang != null && page.lang.equals(language))
                 pagesAsked.add(page);
+        Collections.sort(pagesAsked, (o1, o2) -> Integer.compare(o1.pageNo, o2.pageNo));
         localeWisePageMap.put(language, pagesAsked);
         return pagesAsked;
     }

@@ -41,7 +41,7 @@ import com.eschao.android.widget.view.provider.ContentProvider;
  *
  * @author eschao
  */
-public class SinglePageRender extends PageRender {
+public class SinglePageRender extends BasePageRender {
 
     /**
      * Constructor
@@ -78,7 +78,6 @@ public class SinglePageRender extends PageRender {
                 drawPage(--mPageNo);
                 page.setFirstTexture(mBitmap);
             }
-
             // draw frame for page flip
             mPageFlip.drawFlipFrame();
         }
@@ -88,10 +87,8 @@ public class SinglePageRender extends PageRender {
                 drawPage(mPageNo);
                 page.setFirstTexture(mBitmap);
             }
-
             mPageFlip.drawPageFrame();
         }
-
     }
 
     /**

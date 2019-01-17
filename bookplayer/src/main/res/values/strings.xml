@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">bookplayer</string>
     <string name="home">home</string>
-    <string name="portrait"> Portrait Book</string>
-    <string name="lanscape"> Landscape Book</string>
+    <string name="portrait"> Portrait Image Book</string>
+    <string name="lanscape"> Landscape Image Book</string>
+    <string name="portrait_player_view">Portrait Player Book</string>
+    <string name="lanscape_player_view">Lanscape Player Book</string>
     <string name="dc">dc</string>
     <string name="pageno">1..2</string>
     <string-array name="language_array">
