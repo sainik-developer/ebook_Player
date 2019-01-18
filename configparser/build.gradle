@@ -46,20 +46,21 @@ configurations {
 
 android {
     compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -67,9 +68,8 @@ android {
 }
 
 dependencies {
-
     // Book player dependency
-    implementation project(':model')
+    implementation 'com.sixfingers.bp:model:1.0'
 
     // google library dependency
     implementation 'com.google.code.gson:gson:2.8.5'
