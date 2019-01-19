@@ -6,7 +6,7 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
+# and specify the fully qualified class getName to the JavaScript interface
 # class:
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
@@ -17,5 +17,21 @@
 #-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
-# hide the original source file name.
--renamesourcefileattribute SourceFile
+# hide the original source file getName.
+#-renamesourcefileattribute SourceFile
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontpreverify
+-verbose
+
+-keep, allowobfuscation class com.sixfingers.bp.configparser.*
+-keepclassmembers, allowobfuscation class * {
+    *;
+}
+
+-keepnames class com.sixfingers.bp.configparser.**
+-keepclassmembernames class com.sixfingers.bp.configparser.* {
+    public <methods>;
+    public <fields>;
+    #!private *; also tried this but it didn't work
+}
