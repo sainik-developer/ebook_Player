@@ -29,9 +29,8 @@
     *;
 }
 
--keepnames class com.sixfingers.bp.configparser.**
--keepclassmembernames class com.sixfingers.bp.configparser.* {
+-keepnames class com.sixfingers.bp.configparser.ConfigFileJSONParser
+-keepclassmembernames class com.sixfingers.bp.configparser.ConfigFileJSONParser {
     public <methods>;
     public <fields>;
-    #!private *; also tried this but it didn't work
 }
