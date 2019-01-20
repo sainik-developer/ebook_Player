@@ -55,11 +55,13 @@ public class FileSystemContentProvider implements ContentProvider {
     public Bitmap getBackgroundBitmap(final int height, final int width, final int index) {
         final Page requestPage;
         Bitmap bgBitmap = bitmapCache.get(index);
-        if (bgBitmap == null && (requestPage = provide(index)) != null) {
+        if (bgBitmap == null) {
+            if ((requestPage = provide(index)) == null) {
+                return null;
+            }
             bgBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bgBitmap.eraseColor(0xFFFFFFFF);
             Canvas bgCanvas = new Canvas(bgBitmap);
-
             Drawable bitmapDrawable =
                     BitmapDrawable.createFromPath(basePath + File.separator + requestPage.backgroundImageName);
             if (bitmapDrawable != null) {
@@ -67,9 +69,8 @@ public class FileSystemContentProvider implements ContentProvider {
                 bitmapDrawable.draw(bgCanvas);
                 bitmapCache.put(index, bgBitmap);
             }
-            return bgBitmap;
         }
-        return bgBitmap;
+        return bgBitmap.copy(bgBitmap.getConfig(), true);
     }
 
     @Override

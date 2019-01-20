@@ -26,16 +26,14 @@ import android.util.Log;
 
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipException;
-import com.eschao.android.widget.renderer.BasePageRender;
+import com.eschao.android.widget.renderer.CanvasDecorator;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
-import com.eschao.android.widget.renderer.feature.TextPageRenderDecorator;
 import com.eschao.android.widget.view.provider.ContentProvider;
 import com.eschao.android.widget.view.provider.ContentProviderBuilder;
 import com.sixfingers.bp.model.Book;
 
-import java.util.Locale;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -59,6 +57,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     PageRender mPageRender;
     ReentrantLock mDrawLock;
     ContentProvider contentProvider;
+    CanvasDecorator canvasDecorator;
 
     /****
      *
@@ -70,7 +69,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     public PageFlipView(final Context context,
                         final PageFlipViewType type,
                         final Book book,
-                        final ContentProviderBuilder contentProviderBuilder) {
+                        final ContentProviderBuilder contentProviderBuilder, final CanvasDecorator canvasDecorator) {
         super(context);
         if (type == null || book == null || contentProviderBuilder == null) {
             throw new IllegalArgumentException("either type, book or contentProviderBuilder is null");
@@ -78,6 +77,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         this.type = type;
         this.book = book;
         contentProvider = prepareContentProvider(contentProviderBuilder);
+        this.canvasDecorator = canvasDecorator;
         init(context);
     }
 
@@ -127,10 +127,10 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
     private void preparePageRenderer() {
         switch (this.type) {
             case PORTRAIT:
-                mPageRender = new SinglePageRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
+                mPageRender = new SinglePageRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider, canvasDecorator);
                 break;
             case LANDSCAPE:
-                mPageRender = new DoublePagesRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
+                mPageRender = new DoublePagesRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider, canvasDecorator);
                 break;
         }
     }
@@ -319,7 +319,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case BasePageRender.MSG_ENDED_DRAWING_FRAME:
+                    case PageRender.MSG_ENDED_DRAWING_FRAME:
                         try {
                             mDrawLock.lock();
                             // notify page render to handle ended drawing

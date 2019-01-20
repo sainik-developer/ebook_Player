@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.ViewGroup
+import com.eschao.android.widget.renderer.feature.TextCanvasDecorator
 import com.eschao.android.widget.view.PageFlipView
 import com.sixfingers.bp.configparser.ConfigFileJSONParser
 import com.sixfingers.bp.player.features.BackHomeControlPowerBookDecorator
@@ -68,15 +69,12 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         when (event!!.action) {
             MotionEvent.ACTION_UP -> {
                 pageFlipView!!.onFingerUp(event.x, event.y)
             }
-
         }
         return super.onTouchEvent(event)
-
     }
 
     /***
@@ -112,7 +110,8 @@ class PlayerActivity : AppCompatActivity() {
                 FEATURE_THUMBNAIL -> resultView = ThumbnailPowerEBookDecorator(resultView)
             }
         }
-        return when (resultView) { is PowerEbookDecorator -> resultView
+        return when (resultView) {
+            is PowerEbookDecorator -> resultView
             else -> null
         }
     }
@@ -121,6 +120,6 @@ class PlayerActivity : AppCompatActivity() {
         val bookJsonPath = getExternalFilesDir(null)?.toString() + File.separator + "book_data" + File.separator + "book_data.json"
         val bookJsonInputStream = FileInputStream(bookJsonPath)
         val book = ConfigFileJSONParser().parser(bookJsonInputStream)
-        return PageFlipPowerEBook(this, book, getExternalFilesDir(null)?.toString(), orientation)
+        return PageFlipPowerEBook(this, book, getExternalFilesDir(null)?.toString(), orientation, TextCanvasDecorator())
     }
 }

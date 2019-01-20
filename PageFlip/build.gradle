@@ -21,8 +21,7 @@ android {
 dependencies {
 
     // Book player dependency
-//    implementation 'com.sixfingers.bp:model:1.0'
-    implementation project(':model')
+    implementation 'com.sixfingers.bp:model:1.0'
 
     implementation 'com.android.support:support-annotations:27.0.0'
 }

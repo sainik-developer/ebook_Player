@@ -27,7 +27,7 @@ android {
 
 dependencies {
     // player modules
-    implementation project(':model')
+    implementation 'com.sixfingers.bp:model:1.0'
     implementation project(':PageFlip')
 
     // android dependency

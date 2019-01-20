@@ -7,9 +7,7 @@ public class Property {
 
     public int defaultFontNumber;
     public List<Locale> languagesSupported;
-
     public CloudProperty cloudProperty;
-
     public String basePath;
 }
 

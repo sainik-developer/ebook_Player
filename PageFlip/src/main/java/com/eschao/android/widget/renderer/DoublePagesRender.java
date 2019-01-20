@@ -17,18 +17,13 @@ package com.eschao.android.widget.renderer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipState;
-import com.eschao.android.widget.renderer.feature.TextPageRenderDecorator;
 import com.eschao.android.widget.view.provider.ContentProvider;
 
 /**
@@ -54,7 +49,7 @@ import com.eschao.android.widget.view.provider.ContentProvider;
  *
  * @author eschao
  */
-public class DoublePagesRender extends BasePageRender {
+public class DoublePagesRender extends PageRender {
 
     /**
      * Constructor
@@ -63,8 +58,8 @@ public class DoublePagesRender extends BasePageRender {
      */
     public DoublePagesRender(Context context, PageFlip pageFlip,
                              Handler handler, int pageNo,
-                             final ContentProvider pageContentProvider) {
-        super(context, pageFlip, handler, pageNo, pageContentProvider);
+                             final ContentProvider pageContentProvider, final CanvasDecorator canvasDecorator) {
+        super(context, pageFlip, handler, pageNo, pageContentProvider, canvasDecorator);
     }
 
     /**
@@ -137,11 +132,9 @@ public class DoublePagesRender extends BasePageRender {
         if (mBackgroundBitmap != null) {
             mBackgroundBitmap.recycle();
         }
-
         if (mBitmap != null) {
             mBitmap.recycle();
         }
-
         // create bitmap and canvas for page
         //mBackgroundBitmap = background;
         Page page = mPageFlip.getFirstPage();
@@ -221,39 +214,9 @@ public class DoublePagesRender extends BasePageRender {
         background.recycle();
         background = null;
 
-        // 2. draw page number
-//        int fontSize = (int) (80 * mContext.getResources().getDisplayMetrics()
-//                .scaledDensity);
-//        p.setColor(Color.WHITE);
-//        p.setStrokeWidth(1);
-//        p.setAntiAlias(true);
-//        p.setShadowLayer(5.0f, 8.0f, 8.0f, Color.BLACK);
-//        p.setTextSize(fontSize);
-
-//        String text = String.valueOf(number);
-//        if (number < 0) {
-//            text = "Preface";
-//        } else if (number > MAX_PAGES) {
-//            text = "End";
-//        }
-//        float textWidth = p.measureText(text);
-//        float y = height - p.getTextSize() - 20;
-//        mCanvas.drawText(text, (width - textWidth) / 2, y, p);
-//
-//        if (number == 0) {
-//            String firstPage = "The First Page";
-//            p.setTextSize(calcFontSize(16));
-//            float w = p.measureText(firstPage);
-//            float h = p.getTextSize();
-//            mCanvas.drawText(firstPage, (width - w) / 2, y + 5 + h, p);
-//        } else if (number == MAX_PAGES) {
-//            String lastPage = "The Last Page";
-//            p.setTextSize(calcFontSize(16));
-//            float w = p.measureText(lastPage);
-//            float h = p.getTextSize();
-//            mCanvas.drawText(lastPage, (width - w) / 2, y + 5 + h, p);
-//        }
-        TextPageRenderDecorator.onDrawFrame(this);
+        if (canvasDecorator != null) {
+            canvasDecorator.decorateCanvas(mCanvas, pageContentProvider.provide(number), mContext);
+        }
     }
 
     /**

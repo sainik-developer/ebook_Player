@@ -23,16 +23,15 @@ import java.util.List;
  */
 public class ConfigFileJSONParser implements Parser<InputStream, Book> {
 
-    private Gson gson;
-    private Parser<String, Content> contentParser;
+    private final Gson gson;
+    private final Parser<String, Content> contentParser;
 
     public ConfigFileJSONParser() {
         this.contentParser = new ContentXMLParser();
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Type type = new TypeToken<List<Content>>() {
-        }.getType();
-        gsonBuilder.registerTypeAdapter(type, new ContentJsonDeserialization());
+        gsonBuilder.registerTypeAdapter(TypeToken.getParameterized(List.class, Content.class).getType(), new ContentJsonDeserialization());
         gson = gsonBuilder.create();
+
     }
 
     @Override
