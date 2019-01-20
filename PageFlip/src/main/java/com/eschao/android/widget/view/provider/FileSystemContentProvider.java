@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.LruCache;
 
-import com.eschao.android.widget.view.provider.ContentProvider;
 import com.sixfingers.bp.model.Book;
 import com.sixfingers.bp.model.Page;
 

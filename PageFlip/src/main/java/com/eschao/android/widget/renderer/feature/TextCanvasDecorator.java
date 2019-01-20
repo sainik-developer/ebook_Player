@@ -2,7 +2,6 @@ package com.eschao.android.widget.renderer.feature;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.Layout;
@@ -20,7 +19,6 @@ import com.eschao.android.widget.renderer.feature.span.ShadowColorSpan;
 import com.eschao.android.widget.utils.CalculationUtils;
 import com.sixfingers.bp.model.Page;
 import com.sixfingers.bp.model.Paragraph;
-
 import com.sixfingers.bp.model.Text;
 import com.sixfingers.bp.model.TextStyleSpanable;
 
@@ -86,7 +84,6 @@ public final class TextCanvasDecorator extends CanvasDecorator {
         textPaint.setColor(text.textColor);
         textPaint.setTextSize(text.fontNumber * context.getResources().getDisplayMetrics()
                 .scaledDensity);
-
         // setting the alignment of the text
         textPaint.setTextAlign(setTextAlign(text.textAlign.name()));
         return textPaint;

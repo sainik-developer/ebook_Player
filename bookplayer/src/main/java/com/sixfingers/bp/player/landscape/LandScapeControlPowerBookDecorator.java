@@ -10,9 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.sixfingers.bp.player.features.BackHomeControlPowerBookDecorator;
-import com.sixfingers.bp.player.features.PowerEbookDecorator;
 import com.sixfingers.bp.player.R;
+import com.sixfingers.bp.player.features.PowerEbookDecorator;
 
 import java.util.Arrays;
 

@@ -2,7 +2,6 @@ package com.sixfingers.bp.player.porttrait;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.sixfingers.bp.player.features.PowerEbookDecorator;
 import com.sixfingers.bp.player.R;
-import com.sixfingers.bp.player.landscape.LandScapeControlPowerBookDecorator;
+import com.sixfingers.bp.player.features.PowerEbookDecorator;
 
 import java.util.Arrays;
 

@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.sixfingers.bp.player.R;
-import com.sixfingers.bp.player.landscape.LandScapeControlPowerBookDecorator;
 
 /***
  * Middle play/Pause button when user presses to play or pause depends on state

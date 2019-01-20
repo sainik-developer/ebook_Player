@@ -1,7 +1,5 @@
 package com.eschao.android.widget.utils;
 
-import android.graphics.RectF;
-
 import com.sixfingers.bp.model.Position;
 
 public class CalculationUtils {
