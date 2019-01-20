@@ -18,6 +18,4 @@ public abstract class CanvasDecorator {
      * This is where decoration will go on
      */
     public abstract void decorateCanvas(final Canvas canvas, final Page page, final Context context);
-
-
 }

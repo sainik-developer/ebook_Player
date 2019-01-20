@@ -12,6 +12,6 @@ public class FontManager {
     public static Typeface getByName(final Context context, String fontName) {
         fontName = fontName.isEmpty() ? "helvetica.ttf" : fontName;
         return typefaceWeakReference.get() != null ? typefaceWeakReference.get() :
-                (typefaceWeakReference = new WeakReference<>(Typeface.createFromAsset(context.getAssets(), fontName))).get();
+                (typefaceWeakReference = new WeakReference<>(Typeface.createFromAsset(context.getAssets(), fontName + ".ttf"))).get();
     }
 }
