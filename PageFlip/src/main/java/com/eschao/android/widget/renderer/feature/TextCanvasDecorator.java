@@ -83,7 +83,7 @@ public final class TextCanvasDecorator extends CanvasDecorator {
         // set text as filled
         textPaint.setStyle(Paint.Style.FILL);
         // set text color
-        textPaint.setColor(Color.GREEN);
+        textPaint.setColor(text.textColor);
         textPaint.setTextSize(text.fontNumber * context.getResources().getDisplayMetrics()
                 .scaledDensity);
 
