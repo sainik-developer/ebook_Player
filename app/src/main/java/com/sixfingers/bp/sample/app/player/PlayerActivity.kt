@@ -60,12 +60,12 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        pageFlipView!!.onResume()
+        pageFlipView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        pageFlipView!!.onPause()
+        pageFlipView?.onPause()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -87,7 +87,11 @@ class PlayerActivity : AppCompatActivity() {
             BASE_EBOOK_PLAYER -> {
                 val bookPlayer = createBookPlayer(requestedOrientation)
                 pageFlipView = bookPlayer.pageFlipView
-                return BackHomeControlPowerBookDecorator(bookPlayer)
+                return when (requestedOrientation) {
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT -> PlayPauseControlPowerBookDecorator(ThumbnailPowerEBookDecorator(BackHomeControlPowerBookDecorator(PortraitControlPowerBookDecorator(bookPlayer))))
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE -> PlayPauseControlPowerBookDecorator(ThumbnailPowerEBookDecorator(BackHomeControlPowerBookDecorator(LandScapeControlPowerBookDecorator(bookPlayer))))
+                    else -> null
+                }
             }
             else -> return null
         }

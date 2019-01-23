@@ -40,7 +40,7 @@ public class PlayPauseControlPowerBookDecorator extends PowerEbookDecorator {
         this.setVisibility(View.VISIBLE);
         this.animate()
                 .alpha(1f)
-                .setDuration(1000)
+                .setDuration(500)
                 .setListener(null);
     }
 
@@ -48,7 +48,7 @@ public class PlayPauseControlPowerBookDecorator extends PowerEbookDecorator {
     public void hideView() {
         this.animate()
                 .alpha(0f)
-                .setDuration(1000)
+                .setDuration(500)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
