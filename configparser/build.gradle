@@ -65,11 +65,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     // Book player dependency
     implementation 'com.sixfingers.bp:model:1.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 
     // google library dependency
     implementation 'com.google.code.gson:gson:2.8.5'

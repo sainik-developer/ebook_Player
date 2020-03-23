@@ -16,8 +16,12 @@ import com.sixfingers.bp.player.AbstractPowerEBook;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+/***
+ * This is main class which will be used to make the ebook contents,
+ * Which uses PageFlipView to implements page flip
+ * and gesture detector to observer the gesture
+ */
 public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDetector.OnGestureListener {
-
     private PageFlipView pageFlipView;
     private GestureDetector mGestureDetector;
 

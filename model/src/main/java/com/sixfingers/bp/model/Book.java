@@ -8,7 +8,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Book {
-
     public Property globalProp;
     public List<Page> pages = new LinkedList<>();
     private Map<Locale, List<Page>> localeWisePageMap = new HashMap<>();
@@ -30,6 +29,4 @@ public class Book {
         localeWisePageMap.put(language, pagesAsked);
         return pagesAsked;
     }
-
-
 }

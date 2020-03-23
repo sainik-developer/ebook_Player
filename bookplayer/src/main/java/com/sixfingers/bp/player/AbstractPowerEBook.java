@@ -60,7 +60,6 @@ public abstract class AbstractPowerEBook extends FrameLayout {
         return allChildrenViews = allChildrenViews == null ? getAllChildrenButFirst() : allChildrenViews;
     }
 
-
     private List<PowerEbookDecorator> getAllChildrenButFirst() {
         int count = getChildCount();
         List<PowerEbookDecorator> viewList = new LinkedList<>();

@@ -27,7 +27,6 @@ public class LandScapeControlPowerBookDecorator extends PowerEbookDecorator {
         setSpeedAdapater();
         frameLayout.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT,
                 getScreenHeightByPercentage(12.0f), Gravity.BOTTOM | Gravity.START));
-
     }
 
     private void setPageNo() {

@@ -50,7 +50,6 @@ public final class TextCanvasDecorator extends CanvasDecorator {
             }
             drawText(canvas, text, createTextPaint(text, context));
         }
-
     }
 
     private void drawText(final Canvas canvas, final Text text, final TextPaint textPaint) {
