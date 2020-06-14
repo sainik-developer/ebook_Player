@@ -31,7 +31,7 @@ public abstract class BasePageRender extends PageRender {
     final static int DRAW_ANIMATING_FRAME = 1;
     final static int DRAW_FULL_PAGE = 2;
 
-    final static int MAX_PAGES = 30;
+    static int MAX_PAGES = 30;
 
     public int mPageNo;
     public int mDrawCommand;
@@ -54,6 +54,7 @@ public abstract class BasePageRender extends PageRender {
         mPageFlip.setListener(this);
         mHandler = handler;
         this.pageContentProvider = pageContentProvider;
+        MAX_PAGES = pageContentProvider.lastPageIndex();
     }
 
     /**
@@ -121,7 +122,7 @@ public abstract class BasePageRender extends PageRender {
      * Remember: the drawing operation is always in GL thread instead of
      * main thread
      */
-    public void sendMesaageDrawingFinished() {
+    public void sendMessageDrawingFinished() {
         Message msg = Message.obtain();
         msg.what = MSG_ENDED_DRAWING_FRAME;
         msg.arg1 = mDrawCommand;

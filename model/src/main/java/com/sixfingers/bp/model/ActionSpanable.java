@@ -3,9 +3,7 @@ package com.sixfingers.bp.model;
 /**
  * Created by sainik on 11.11.18.
  */
-
 public class ActionSpanable extends Spanable {
-
     public float audioTime;
     public String text = "";
     // in second iteration
@@ -16,8 +14,6 @@ public class ActionSpanable extends Spanable {
         super(start, end);
         this.audioTime = audioTime;
     }
-
-
 
     public enum Type {
         AUDIO,

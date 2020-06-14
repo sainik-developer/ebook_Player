@@ -10,7 +10,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.sixfingers.bp.player.features;
 
 import android.animation.Animator;
@@ -32,7 +31,7 @@ public class BackHomeControlPowerBookDecorator extends PowerEbookDecorator {
     public BackHomeControlPowerBookDecorator(final ViewGroup viewGroup) {
         super(viewGroup);
         inflate(viewGroup.getContext(), R.layout.back_control_top_left, this);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getScreenSquareByPercentage(5),
+        final FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getScreenSquareByPercentage(5),
                 getScreenSquareByPercentage(5), Gravity.TOP | Gravity.START);
         layoutParams.setMargins(getScreenWidthByPercentage(1.0f),
                 getScreenHeightByPercentage(1.0f), 0, 0);

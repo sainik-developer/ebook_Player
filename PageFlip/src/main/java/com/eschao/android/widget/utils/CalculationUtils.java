@@ -1,11 +1,8 @@
 package com.eschao.android.widget.utils;
 
-import android.graphics.RectF;
-
 import com.sixfingers.bp.model.Position;
 
 public class CalculationUtils {
-
 
     public static Position convertPercentageToAbsoluteForParagraph(Position position, int width, int height) {
         final Position actualPosition = new Position();
@@ -16,6 +13,5 @@ public class CalculationUtils {
         //TODO this code to be changed : This holds the height of the text
         actualPosition.height = height * position.height / 100;
         return actualPosition;
-
     }
 }

@@ -35,4 +35,5 @@ public interface ContentProvider {
      */
     void setLanguage(Locale language);
 
+    int lastPageIndex();
 }

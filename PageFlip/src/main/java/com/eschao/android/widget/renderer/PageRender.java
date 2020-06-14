@@ -15,22 +15,13 @@
  */
 package com.eschao.android.widget.renderer;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.os.Handler;
-import android.os.Message;
-
 import com.eschao.android.widget.pageflip.OnPageFlipListener;
-import com.eschao.android.widget.pageflip.PageFlip;
-import com.eschao.android.widget.view.provider.ContentProvider;
 
 /**
  * Abstract Page Render
  *
  * @author eschao
  */
-
 public abstract class PageRender implements OnPageFlipListener {
 
     /**
@@ -39,7 +30,6 @@ public abstract class PageRender implements OnPageFlipListener {
      * @return page number
      */
     public abstract int getPageNo();
-
 
     /**
      * Release resources
@@ -71,7 +61,7 @@ public abstract class PageRender implements OnPageFlipListener {
      * Remember: the drawing operation is always in GL thread instead of
      * main thread
      */
-    public abstract void sendMesaageDrawingFinished();
+    public abstract void sendMessageDrawingFinished();
 
     /**
      * Render page frame
