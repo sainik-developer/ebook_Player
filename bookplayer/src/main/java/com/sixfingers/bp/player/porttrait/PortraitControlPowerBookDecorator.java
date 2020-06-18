@@ -2,6 +2,7 @@ package com.sixfingers.bp.player.porttrait;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.sixfingers.bp.player.R;
+import com.example.eventhandler.Callback;
+import com.example.eventhandler.CentralHandler;
 import com.sixfingers.bp.player.features.PowerEbookDecorator;
+import com.sixfingers.bp.player.R;
 
 import java.util.Arrays;
 
@@ -23,23 +26,34 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class PortraitControlPowerBookDecorator extends PowerEbookDecorator {
 
     private final int height;
+    private TextView pageNoView;
+    private Spinner languageSpinnerView;
+    private static final String LANGUAGE_OPTIONS[] = {"English", "Español"};
+
 
     public PortraitControlPowerBookDecorator(final ViewGroup viewGroup) {
         super(viewGroup);
         inflate(viewGroup.getContext(), R.layout.portrait_control_panel, this);
         setPageNo();
-        setLanguageAdapater();
+        setLanguageAdapter();
         frameLayout.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT,
                 height = getScreenHeightByPercentage(7),
                 Gravity.BOTTOM | Gravity.START));
     }
 
     private void setPageNo() {
-        TextView textView = findViewById(R.id.id_pageno);
-        textView.setText("1");
+        pageNoView = findViewById(R.id.id_pageno);
+        CentralHandler.Companion.getInstance()
+                .addCallback(CentralHandler.MessageCode.PAGE_NUMBER.getCode(), new Callback() {
+                    @Override
+                    public void callback(Bundle bundle) {
+                        pageNoView.setText(bundle.getString("current_page") != null ? bundle.getString("current_page") : "-");
+                    }
+                });
+
     }
 
-    private void setLanguageAdapater() {
+    private void setLanguageAdapter() {
         Spinner spinner = findViewById(R.id.id_language);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 R.layout.language_spinner_text,
@@ -54,7 +68,7 @@ public class PortraitControlPowerBookDecorator extends PowerEbookDecorator {
         this.setVisibility(View.VISIBLE);
         this.animate()
                 .alpha(1f)
-                .setDuration(500)
+                .setDuration(1000)
                 .setListener(null);
 
 //        ObjectAnimator animation = ObjectAnimator.ofFloat(this, "translationY", -height);
@@ -67,7 +81,7 @@ public class PortraitControlPowerBookDecorator extends PowerEbookDecorator {
     public void hideView() {
         this.animate()
                 .alpha(0f)
-                .setDuration(500)
+                .setDuration(1000)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {

@@ -24,7 +24,9 @@ import android.os.Handler;
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipState;
+import com.eschao.android.widget.renderer.feature.TextPageRenderDecorator;
 import com.eschao.android.widget.view.provider.ContentProvider;
+import com.example.eventhandler.CentralHandler;
 
 /**
  * Double pages render
@@ -49,17 +51,16 @@ import com.eschao.android.widget.view.provider.ContentProvider;
  *
  * @author eschao
  */
-public class DoublePagesRender extends PageRender {
+public class DoublePagesRender extends BasePageRender {
 
     /**
      * Constructor
      *
      * @see {@link PageRender(Context, PageFlip, Handler, int)}
      */
-    public DoublePagesRender(Context context, PageFlip pageFlip,
-                             Handler handler, int pageNo,
-                             final ContentProvider pageContentProvider, final CanvasDecorator canvasDecorator) {
-        super(context, pageFlip, handler, pageNo, pageContentProvider, canvasDecorator);
+    public DoublePagesRender(final Context context, final PageFlip pageFlip, final Handler handler, int pageNo,
+                             final ContentProvider pageContentProvider) {
+        super(context, pageFlip, handler, pageNo, pageContentProvider);
     }
 
     /**
@@ -68,41 +69,34 @@ public class DoublePagesRender extends PageRender {
     public void onDrawFrame() {
         // 1. delete unused textures to save memory
         mPageFlip.deleteUnusedTextures();
-
         // 2. there are two pages for representing the whole screen, we need to
         // draw them one by one
         final Page first = mPageFlip.getFirstPage();
         final Page second = mPageFlip.getSecondPage();
-
         // 3. check if the first texture is valid for first page, if not,
         // create it with relative content
         if (!first.isFirstTextureSet()) {
             drawPage(first.isLeftPage() ? mPageNo : mPageNo + 1);
             first.setFirstTexture(mBitmap);
         }
-
         // 4. check if the first texture is valid for second page
         if (!second.isFirstTextureSet()) {
             drawPage(second.isLeftPage() ? mPageNo : mPageNo + 1);
             second.setFirstTexture(mBitmap);
         }
-
         // 5. handle drawing command triggered from finger moving and animating
-        if (mDrawCommand == DRAW_MOVING_FRAME ||
-                mDrawCommand == DRAW_ANIMATING_FRAME) {
+        if (mDrawCommand == DRAW_MOVING_FRAME || mDrawCommand == DRAW_ANIMATING_FRAME) {
             // before drawing, check if back texture of first page is valid
             // Remember: the first page is always the fold page
             if (!first.isBackTextureSet()) {
                 drawPage(first.isLeftPage() ? mPageNo - 1 : mPageNo + 2);
                 first.setBackTexture(mBitmap);
             }
-
             // check the second texture of first page is valid.
             if (!first.isSecondTextureSet()) {
                 drawPage(first.isLeftPage() ? mPageNo - 2 : mPageNo + 3);
                 first.setSecondTexture(mBitmap);
             }
-
             // draw frame for page flip
             mPageFlip.drawFlipFrame();
         }
@@ -110,7 +104,6 @@ public class DoublePagesRender extends PageRender {
         else if (mDrawCommand == DRAW_FULL_PAGE) {
             mPageFlip.drawPageFrame();
         }
-
 //        // 6. send message to main thread to notify drawing is ended so that
 //        // we can continue to calculate next animation frame if need.
 //        // Remember: the drawing operation is always in GL thread instead of
@@ -122,7 +115,7 @@ public class DoublePagesRender extends PageRender {
     }
 
     /**
-     * Handle GL surface is changed
+     * Handle GL surface is changed, when app goes from landscape from portrait
      *
      * @param width  surface width
      * @param height surface height
@@ -132,9 +125,11 @@ public class DoublePagesRender extends PageRender {
         if (mBackgroundBitmap != null) {
             mBackgroundBitmap.recycle();
         }
+
         if (mBitmap != null) {
             mBitmap.recycle();
         }
+
         // create bitmap and canvas for page
         //mBackgroundBitmap = background;
         Page page = mPageFlip.getFirstPage();
@@ -152,7 +147,7 @@ public class DoublePagesRender extends PageRender {
      * will be called in main thread
      *
      * @param what event type
-     * @return ture if need render again
+     * @return true if need render again
      */
     public boolean onEndedDrawing(int what) {
         if (what == DRAW_ANIMATING_FRAME) {
@@ -179,12 +174,13 @@ public class DoublePagesRender extends PageRender {
                     } else {
                         mPageNo += 2;
                     }
+                    CentralHandler.Companion.getInstance().setPageNumber(mPageNo + 1, mPageNo + 2);
                 }
-
                 mDrawCommand = DRAW_FULL_PAGE;
                 return true;
             }
         }
+        CentralHandler.Companion.getInstance().setPageNumber(mPageNo + 1, mPageNo + 2);
         return false;
     }
 
@@ -214,9 +210,39 @@ public class DoublePagesRender extends PageRender {
         background.recycle();
         background = null;
 
-        if (canvasDecorator != null) {
-            canvasDecorator.decorateCanvas(mCanvas, pageContentProvider.provide(number), mContext);
-        }
+        // 2. draw page number
+//        int fontSize = (int) (80 * mContext.getResources().getDisplayMetrics()
+//                .scaledDensity);
+//        p.setColor(Color.WHITE);
+//        p.setStrokeWidth(1);
+//        p.setAntiAlias(true);
+//        p.setShadowLayer(5.0f, 8.0f, 8.0f, Color.BLACK);
+//        p.setTextSize(fontSize);
+
+//        String text = String.valueOf(number);
+//        if (number < 0) {
+//            text = "Preface";
+//        } else if (number > MAX_PAGES) {
+//            text = "End";
+//        }
+//        float textWidth = p.measureText(text);
+//        float y = height - p.getTextSize() - 20;
+//        mCanvas.drawText(text, (width - textWidth) / 2, y, p);
+//
+//        if (number == 0) {
+//            String firstPage = "The First Page";
+//            p.setTextSize(calcFontSize(16));
+//            float w = p.measureText(firstPage);
+//            float h = p.getTextSize();
+//            mCanvas.drawText(firstPage, (width - w) / 2, y + 5 + h, p);
+//        } else if (number == MAX_PAGES) {
+//            String lastPage = "The Last Page";
+//            p.setTextSize(calcFontSize(16));
+//            float w = p.measureText(lastPage);
+//            float h = p.getTextSize();
+//            mCanvas.drawText(lastPage, (width - w) / 2, y + 5 + h, p);
+//        }
+        TextPageRenderDecorator.onDrawFrame(this);
     }
 
     /**

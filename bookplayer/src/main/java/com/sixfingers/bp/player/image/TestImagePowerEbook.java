@@ -17,11 +17,10 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /***
- * This is the test Power Ebook for testing, Just to test verious position
+ * This is the test Power E-book for testing, Just to test verious position
  * of control and their appearance and animation.
  */
 public class TestImagePowerEbook extends AbstractPowerEBook {
-
     public ImageView bgImgView;
     private List<PowerEbookDecorator> allChildrenViews;
 

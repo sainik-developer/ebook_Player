@@ -22,13 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
     // player modules
     implementation 'com.sixfingers.bp:model:1.0'
     implementation project(':PageFlip')
+    implementation project(':eventhandler')
 
     // android dependency
     implementation 'com.android.support:appcompat-v7:28.0.0'

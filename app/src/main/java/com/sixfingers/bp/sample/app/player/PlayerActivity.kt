@@ -18,7 +18,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.ViewGroup
-import com.eschao.android.widget.renderer.feature.TextCanvasDecorator
 import com.eschao.android.widget.view.PageFlipView
 import com.sixfingers.bp.configparser.ConfigFileJSONParser
 import com.sixfingers.bp.player.features.BackHomeControlPowerBookDecorator
@@ -32,7 +31,6 @@ import com.sixfingers.bp.player.porttrait.PortraitControlPowerBookDecorator
 import com.sixfingers.bp.sample.app.R
 import java.io.File
 import java.io.FileInputStream
-
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -60,12 +58,12 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        pageFlipView?.onResume()
+        pageFlipView!!.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        pageFlipView?.onPause()
+        pageFlipView!!.onPause()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -80,18 +78,13 @@ class PlayerActivity : AppCompatActivity() {
     /***
      *
      */
-    fun createView(): PowerEbookDecorator? {
-        val baseType = intent?.extras?.getString(BASE_EBOOK_KEY)
-        when (baseType) {
-            BASE_EBOOK_IMAGE -> return decorateeViews(TestImagePowerEbook(this, R.drawable.test))
+    private fun createView(): PowerEbookDecorator? {
+        when (intent?.extras?.getString(BASE_EBOOK_KEY)) {
+            BASE_EBOOK_IMAGE -> return decorateViews(TestImagePowerEbook(this, R.drawable.test))
             BASE_EBOOK_PLAYER -> {
                 val bookPlayer = createBookPlayer(requestedOrientation)
                 pageFlipView = bookPlayer.pageFlipView
-                return when (requestedOrientation) {
-                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT -> PlayPauseControlPowerBookDecorator(ThumbnailPowerEBookDecorator(BackHomeControlPowerBookDecorator(PortraitControlPowerBookDecorator(bookPlayer))))
-                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE -> PlayPauseControlPowerBookDecorator(ThumbnailPowerEBookDecorator(BackHomeControlPowerBookDecorator(LandScapeControlPowerBookDecorator(bookPlayer))))
-                    else -> null
-                }
+                return LandScapeControlPowerBookDecorator(BackHomeControlPowerBookDecorator(bookPlayer))
             }
             else -> return null
         }
@@ -100,7 +93,7 @@ class PlayerActivity : AppCompatActivity() {
     /***
      *
      */
-    fun decorateeViews(view: ViewGroup): PowerEbookDecorator? {
+    private fun decorateViews(view: ViewGroup): PowerEbookDecorator? {
         val others = intent?.extras?.getStringArray(DECORATOR_KEYS)
         var resultView: ViewGroup = view
         when (requestedOrientation) {
@@ -124,6 +117,6 @@ class PlayerActivity : AppCompatActivity() {
         val bookJsonPath = getExternalFilesDir(null)?.toString() + File.separator + "book_data" + File.separator + "book_data.json"
         val bookJsonInputStream = FileInputStream(bookJsonPath)
         val book = ConfigFileJSONParser().parser(bookJsonInputStream)
-        return PageFlipPowerEBook(this, book, getExternalFilesDir(null)?.toString(), orientation, TextCanvasDecorator())
+        return PageFlipPowerEBook(this, book, getExternalFilesDir(null)?.toString(), orientation)
     }
 }

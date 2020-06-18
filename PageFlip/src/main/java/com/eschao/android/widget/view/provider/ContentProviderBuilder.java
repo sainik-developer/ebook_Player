@@ -58,15 +58,16 @@ public class ContentProviderBuilder {
     }
 
     /***
-     *
+     * Content like image, audio file and configuration json can come from
+     * either file system packed with apk or cloud
      */
     public enum ContentProviderType {
         /***
-         *
+         * when assets have to be taken from apk unpacked file system
          */
         FILE,
         /***
-         *
+         * when assets have to be taken from cloud
          */
         CLOUD;
     }

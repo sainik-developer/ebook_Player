@@ -19,9 +19,9 @@ import java.util.Locale;
 public class FileSystemContentProvider implements ContentProvider {
 
     private final Book book;
-
     private Locale locale;
     private final String basePath;
+    private int totalPagesNo;
 
     private LruCache<Integer, Bitmap> bitmapCache = new LruCache<Integer, Bitmap>(3) {
         @Override
@@ -42,6 +42,7 @@ public class FileSystemContentProvider implements ContentProvider {
 
     public FileSystemContentProvider(final Book book, final String fileSystemBasePath) {
         this(book, Locale.ENGLISH, fileSystemBasePath);
+        totalPagesNo = book.getPagesByLanguage(Locale.ENGLISH).size();
     }
 
     public FileSystemContentProvider(final Book book, final Locale locale, final String fileSystemBasePath) {
@@ -80,5 +81,10 @@ public class FileSystemContentProvider implements ContentProvider {
     @Override
     public void setLanguage(Locale locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public int lastPageIndex() {
+        return totalPagesNo - 1;
     }
 }

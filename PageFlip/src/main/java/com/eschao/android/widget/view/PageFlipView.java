@@ -26,7 +26,7 @@ import android.util.Log;
 
 import com.eschao.android.widget.pageflip.PageFlip;
 import com.eschao.android.widget.pageflip.PageFlipException;
-import com.eschao.android.widget.renderer.CanvasDecorator;
+import com.eschao.android.widget.renderer.BasePageRender;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
@@ -48,16 +48,17 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
 
     private final static String TAG = "PageFlipView";
 
-    int mPageNo;
-    Book book;
-    int mDuration;
-    Handler mHandler;
-    PageFlip mPageFlip;
-    PageFlipViewType type;
-    PageRender mPageRender;
-    ReentrantLock mDrawLock;
-    ContentProvider contentProvider;
-    CanvasDecorator canvasDecorator;
+    private int mPageNo;
+    private int mDuration;
+    private final Book book;
+    private PageFlip mPageFlip;
+    private final PageFlipViewType type;
+    private PageRender mPageRender;
+    private ReentrantLock mDrawLock;
+
+    private final ContentProvider contentProvider;
+
+    private static Handler mHandler;
 
     /****
      *
@@ -66,10 +67,8 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
      * @param book
      * @param contentProviderBuilder
      */
-    public PageFlipView(final Context context,
-                        final PageFlipViewType type,
-                        final Book book,
-                        final ContentProviderBuilder contentProviderBuilder, final CanvasDecorator canvasDecorator) {
+    public PageFlipView(final Context context, final PageFlipViewType type,
+                        final Book book, final ContentProviderBuilder contentProviderBuilder) {
         super(context);
         if (type == null || book == null || contentProviderBuilder == null) {
             throw new IllegalArgumentException("either type, book or contentProviderBuilder is null");
@@ -77,13 +76,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         this.type = type;
         this.book = book;
         contentProvider = prepareContentProvider(contentProviderBuilder);
-        this.canvasDecorator = canvasDecorator;
         init(context);
-    }
-
-    @Override
-    public boolean isInEditMode() {
-        return false;
     }
 
     private void init(Context context) {
@@ -115,7 +108,6 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
-
     private ContentProvider prepareContentProvider(final ContentProviderBuilder builder) {
         return builder
                 .setBook(book)
@@ -123,18 +115,16 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
                 .build();
     }
 
-
     private void preparePageRenderer() {
         switch (this.type) {
             case PORTRAIT:
-                mPageRender = new SinglePageRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider, canvasDecorator);
+                mPageRender = new SinglePageRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
                 break;
             case LANDSCAPE:
-                mPageRender = new DoublePagesRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider, canvasDecorator);
+                mPageRender = new DoublePagesRender(getContext(), mPageFlip, mHandler, mPageNo, contentProvider);
                 break;
         }
     }
-
 
     /**
      * Is auto page mode enabled?
@@ -249,7 +239,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
             mDrawLock.lock();
             if (mPageRender != null) {
                 mPageRender.onDrawFrame();
-                mPageRender.sendMesaageDrawingFinished();
+                mPageRender.sendMessageDrawingFinished();
             }
         } finally {
             mDrawLock.unlock();
@@ -319,7 +309,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case PageRender.MSG_ENDED_DRAWING_FRAME:
+                    case BasePageRender.MSG_ENDED_DRAWING_FRAME:
                         try {
                             mDrawLock.lock();
                             // notify page render to handle ended drawing

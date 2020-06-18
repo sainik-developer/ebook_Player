@@ -25,7 +25,6 @@ import java.util.List;
 public abstract class AbstractPowerEBook extends FrameLayout {
 
     private List<PowerEbookDecorator> allChildrenViews;
-
     protected AbstractPowerEBook(final Context context) {
         super(context);
     }

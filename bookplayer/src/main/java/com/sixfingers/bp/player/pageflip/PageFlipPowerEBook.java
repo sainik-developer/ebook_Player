@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
-import com.eschao.android.widget.renderer.CanvasDecorator;
 import com.eschao.android.widget.view.PageFlipView;
 import com.eschao.android.widget.view.PageFlipViewType;
 import com.eschao.android.widget.view.provider.ContentProviderBuilder;
@@ -17,9 +16,7 @@ import com.sixfingers.bp.player.AbstractPowerEBook;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /***
- * This is main class which will be used to make the ebook contents,
- * Which uses PageFlipView to implements page flip
- * and gesture detector to observer the gesture
+ *
  */
 public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDetector.OnGestureListener {
     private PageFlipView pageFlipView;
@@ -29,15 +26,11 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
         return pageFlipView;
     }
 
-    public PageFlipPowerEBook(final Context context,
-                              final Book book,
-                              final String fileSystemLocation,
-                              final int orientation,
-                              final CanvasDecorator canvasDecorator) {
+    public PageFlipPowerEBook(final Context context, final Book book, final String fileSystemLocation, final int orientation) {
         super(context);
         setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         setSystemUiVisibility(SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        addView(createPageFlipView(context, book, fileSystemLocation, orientation, canvasDecorator),
+        addView(createPageFlipView(context, book, fileSystemLocation, orientation),
                 0, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT,
                         Gravity.CENTER));
         mGestureDetector = new GestureDetector(context, this);
@@ -46,28 +39,25 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
     private PageFlipView createPageFlipView(final Context context,
                                             final Book book,
                                             final String fileSystemLocation,
-                                            final int orientation,
-                                            final CanvasDecorator canvasDecorator) {
+                                            final int orientation) {
         // partially create the builder of page provider
         final ContentProviderBuilder builder = new ContentProviderBuilder(ContentProviderBuilder.ContentProviderType.FILE)
                 .setFileSystemBasePath(fileSystemLocation);
         pageFlipView = new PageFlipView(context,
                 orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ? PageFlipViewType.LANDSCAPE : PageFlipViewType.PORTRAIT,
-                book, builder, canvasDecorator);
+                book, builder);
         return pageFlipView;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return (event.getAction() == MotionEvent.ACTION_UP ?
-                pageFlipView.onFingerUp(event.getX(), event.getY()) :
-                mGestureDetector.onTouchEvent(event)) || super.onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);
     }
 
     @Override
     public boolean onDown(MotionEvent e) {
         pageFlipView.onFingerDown(e.getX(), e.getY());
-        return false;
+        return true;
     }
 
     @Override
@@ -77,7 +67,7 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+        return super.onTouchEvent(e);
     }
 
     @Override

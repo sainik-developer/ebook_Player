@@ -13,14 +13,12 @@ public class ShadowColorSpan extends CharacterStyle implements UpdateAppearance,
     private final float mDx;
     private final float mDy;
 
-
     public ShadowColorSpan(final float redius, final float dx, float dy, int shadowColor) {
         mRedius = redius;
         mDx = dx;
         mDy = dy;
         mColor = shadowColor;
     }
-
 
     @Override
     public int getSpanTypeId() {

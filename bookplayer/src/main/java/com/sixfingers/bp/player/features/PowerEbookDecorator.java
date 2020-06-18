@@ -23,9 +23,8 @@ import android.widget.FrameLayout;
  *
  */
 public abstract class PowerEbookDecorator extends ConstraintLayout {
-
+    // main frame which holds the back ground content eg image or flip page view
     public FrameLayout frameLayout;
-
     private DisplayMetrics displayMetrics = new DisplayMetrics();
 
     public PowerEbookDecorator(final ViewGroup viewGroup) {
