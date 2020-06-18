@@ -32,7 +32,6 @@ import com.sixfingers.bp.sample.app.R
 import java.io.File
 import java.io.FileInputStream
 
-
 class PlayerActivity : AppCompatActivity() {
 
     companion object {
@@ -68,28 +67,24 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         when (event!!.action) {
             MotionEvent.ACTION_UP -> {
                 pageFlipView!!.onFingerUp(event.x, event.y)
             }
-
         }
         return super.onTouchEvent(event)
-
     }
 
     /***
      *
      */
-    fun createView(): PowerEbookDecorator? {
-        val baseType = intent?.extras?.getString(BASE_EBOOK_KEY)
-        when (baseType) {
-            BASE_EBOOK_IMAGE -> return decorateeViews(TestImagePowerEbook(this, R.drawable.test))
+    private fun createView(): PowerEbookDecorator? {
+        when (intent?.extras?.getString(BASE_EBOOK_KEY)) {
+            BASE_EBOOK_IMAGE -> return decorateViews(TestImagePowerEbook(this, R.drawable.test))
             BASE_EBOOK_PLAYER -> {
                 val bookPlayer = createBookPlayer(requestedOrientation)
                 pageFlipView = bookPlayer.pageFlipView
-                return BackHomeControlPowerBookDecorator(bookPlayer)
+                return LandScapeControlPowerBookDecorator(BackHomeControlPowerBookDecorator(bookPlayer))
             }
             else -> return null
         }
@@ -98,7 +93,7 @@ class PlayerActivity : AppCompatActivity() {
     /***
      *
      */
-    fun decorateeViews(view: ViewGroup): PowerEbookDecorator? {
+    private fun decorateViews(view: ViewGroup): PowerEbookDecorator? {
         val others = intent?.extras?.getStringArray(DECORATOR_KEYS)
         var resultView: ViewGroup = view
         when (requestedOrientation) {
@@ -112,7 +107,8 @@ class PlayerActivity : AppCompatActivity() {
                 FEATURE_THUMBNAIL -> resultView = ThumbnailPowerEBookDecorator(resultView)
             }
         }
-        return when (resultView) { is PowerEbookDecorator -> resultView
+        return when (resultView) {
+            is PowerEbookDecorator -> resultView
             else -> null
         }
     }

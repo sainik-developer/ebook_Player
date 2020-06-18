@@ -65,3 +65,10 @@ How to build+run test and publish to local .m2
 ```
 
 https://preview.themeforest.net/item/wrapkit-bootstrap-4-multipurpose-template/full_screen_preview/20957775?clickthrough_id=1394155239&redirect_back=true&ref=cirvitis
+
+
+How to build the projects for book view
+
+../gradlew clean
+../gradlew build
+../gradlew publishToMavenLocal

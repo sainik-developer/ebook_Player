@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.LruCache;
 
-import com.eschao.android.widget.view.provider.ContentProvider;
 import com.sixfingers.bp.model.Book;
 import com.sixfingers.bp.model.Page;
 
@@ -20,7 +19,6 @@ import java.util.Locale;
 public class FileSystemContentProvider implements ContentProvider {
 
     private final Book book;
-
     private Locale locale;
     private final String basePath;
 
@@ -80,5 +78,10 @@ public class FileSystemContentProvider implements ContentProvider {
     @Override
     public void setLanguage(Locale locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public int lastPageIndex() {
+        return book.pages.size() - 1;
     }
 }

@@ -31,7 +31,8 @@
     * `hi` = head indent
     * `li` = line indent
 
-4. `<ac></ac>` **Action** on tap (nested to <Text> tag)
+4. `<ac></ac>` **Action** on
+tap (nested to <Text> tag)
      * `audio-time` = millis
      * `video-clip` = 'resource identifier'
      * `popup` = 'resource identifier'
@@ -45,3 +46,7 @@
 
 8. `<bg></bg>` set **Label back ground color for text** (nested to <Text> tag)
     * `c` = color
+
+../gradlew clean
+../gradlew build
+../gradlew publishToMavenLocal

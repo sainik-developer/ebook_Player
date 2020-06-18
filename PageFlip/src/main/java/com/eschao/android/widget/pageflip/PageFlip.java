@@ -21,7 +21,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.opengl.GLUtils;
 import android.util.Log;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Scroller;
 
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;

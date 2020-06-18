@@ -11,7 +11,6 @@ public class Page {
     public String backgroundImageName;
     public List<Content> contents = new ArrayList<>();
 
-
     public List<?> getBySubType(final Class<? extends Content> aClass) {
         if (aClass.getName().equals(Text.class.getName())) {
             List<Text> texts = new LinkedList<>();
@@ -21,7 +20,7 @@ public class Page {
                 }
             }
             return texts;
-        } else if (aClass.getTypeName().equals(Audio.class.getTypeName())) {
+        } else if (aClass.getName().equals(Audio.class.getName())) {
             List<Audio> audios = new LinkedList<>();
             for (Content content : contents) {
                 if (content instanceof Audio) {
@@ -32,5 +31,4 @@ public class Page {
         }
         return null;
     }
-
 }

@@ -15,8 +15,10 @@ import com.sixfingers.bp.player.AbstractPowerEBook;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+/***
+ *
+ */
 public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDetector.OnGestureListener {
-
     private PageFlipView pageFlipView;
     private GestureDetector mGestureDetector;
 
@@ -24,10 +26,7 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
         return pageFlipView;
     }
 
-    public PageFlipPowerEBook(final Context context,
-                              final Book book,
-                              final String fileSystemLocation,
-                              final int orientation) {
+    public PageFlipPowerEBook(final Context context, final Book book, final String fileSystemLocation, final int orientation) {
         super(context);
         setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         setSystemUiVisibility(SYSTEM_UI_FLAG_HIDE_NAVIGATION);
@@ -50,14 +49,10 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
         return pageFlipView;
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return event.getAction() == MotionEvent.ACTION_UP ?
-                pageFlipView.onFingerUp(event.getX(), event.getY()) :
-                mGestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
+        return event.getAction() == MotionEvent.ACTION_UP ? pageFlipView.onFingerUp(event.getX(), event.getY()) : mGestureDetector.onTouchEvent(event);
     }
-
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -72,7 +67,7 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+        return onTouchEvent(e);
     }
 
     @Override

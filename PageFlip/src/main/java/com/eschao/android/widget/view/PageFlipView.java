@@ -30,12 +30,10 @@ import com.eschao.android.widget.renderer.BasePageRender;
 import com.eschao.android.widget.renderer.DoublePagesRender;
 import com.eschao.android.widget.renderer.PageRender;
 import com.eschao.android.widget.renderer.SinglePageRender;
-import com.eschao.android.widget.renderer.feature.TextPageRenderDecorator;
 import com.eschao.android.widget.view.provider.ContentProvider;
 import com.eschao.android.widget.view.provider.ContentProviderBuilder;
 import com.sixfingers.bp.model.Book;
 
-import java.util.Locale;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -50,15 +48,17 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
 
     private final static String TAG = "PageFlipView";
 
-    int mPageNo;
-    Book book;
-    int mDuration;
-    Handler mHandler;
-    PageFlip mPageFlip;
-    PageFlipViewType type;
-    PageRender mPageRender;
-    ReentrantLock mDrawLock;
-    ContentProvider contentProvider;
+    private int mPageNo;
+    private int mDuration;
+    private final Book book;
+    private PageFlip mPageFlip;
+    private final PageFlipViewType type;
+    private PageRender mPageRender;
+    private ReentrantLock mDrawLock;
+
+    private final ContentProvider contentProvider;
+
+    private static Handler mHandler;
 
     /****
      *
@@ -67,10 +67,8 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
      * @param book
      * @param contentProviderBuilder
      */
-    public PageFlipView(final Context context,
-                        final PageFlipViewType type,
-                        final Book book,
-                        final ContentProviderBuilder contentProviderBuilder) {
+    public PageFlipView(final Context context, final PageFlipViewType type,
+                        final Book book, final ContentProviderBuilder contentProviderBuilder) {
         super(context);
         if (type == null || book == null || contentProviderBuilder == null) {
             throw new IllegalArgumentException("either type, book or contentProviderBuilder is null");
@@ -79,11 +77,6 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         this.book = book;
         contentProvider = prepareContentProvider(contentProviderBuilder);
         init(context);
-    }
-
-    @Override
-    public boolean isInEditMode() {
-        return false;
     }
 
     private void init(Context context) {
@@ -115,14 +108,12 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
-
     private ContentProvider prepareContentProvider(final ContentProviderBuilder builder) {
         return builder
                 .setBook(book)
                 .setPageFlipView(this)
                 .build();
     }
-
 
     private void preparePageRenderer() {
         switch (this.type) {
@@ -134,7 +125,6 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
                 break;
         }
     }
-
 
     /**
      * Is auto page mode enabled?
@@ -249,7 +239,7 @@ public class PageFlipView extends GLSurfaceView implements Renderer {
             mDrawLock.lock();
             if (mPageRender != null) {
                 mPageRender.onDrawFrame();
-                mPageRender.sendMesaageDrawingFinished();
+                mPageRender.sendMessageDrawingFinished();
             }
         } finally {
             mDrawLock.unlock();

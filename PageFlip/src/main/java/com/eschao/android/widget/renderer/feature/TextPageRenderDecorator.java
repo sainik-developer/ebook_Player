@@ -13,9 +13,6 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
 
 import com.eschao.android.widget.renderer.BasePageRender;
-import com.eschao.android.widget.renderer.FontManager;
-import com.eschao.android.widget.renderer.PageRender;
-import com.eschao.android.widget.renderer.PageRenderDecorator;
 import com.eschao.android.widget.renderer.feature.span.ShadowColorSpan;
 import com.eschao.android.widget.utils.CalculationUtils;
 import com.sixfingers.bp.model.Page;
@@ -33,8 +30,7 @@ public class TextPageRenderDecorator {
 
 
     private static void drawText(final Text text, final BasePageRender basePageRender) {
-
-        TextPaint textPaint = new TextPaint();
+        final TextPaint textPaint = new TextPaint();
         // To have smooth edge of image
         textPaint.setAntiAlias(true);
         textPaint.setSubpixelText(true);
@@ -72,7 +68,6 @@ public class TextPageRenderDecorator {
         }
     }
 
-
     private static SpannableStringBuilder drawParagraph(final Paragraph paragraph) {
         SpannableStringBuilder ssBuilder = new SpannableStringBuilder(paragraph.text);
         applyBold(ssBuilder, paragraph.getTextStyles(TextStyleSpanable.Type.BOLD));
@@ -81,7 +76,6 @@ public class TextPageRenderDecorator {
         applyShadowColor(ssBuilder, paragraph.getTextStyles(TextStyleSpanable.Type.SHADOW));
         return ssBuilder;
     }
-
 
     @SuppressWarnings("unchecked")
     public static void onDrawFrame(BasePageRender basePageRender) {
@@ -102,8 +96,7 @@ public class TextPageRenderDecorator {
         }
     }
 
-    private static void applyItalic(final SpannableStringBuilder ssBuilder,
-                                    final List<TextStyleSpanable> italics) {
+    private static void applyItalic(final SpannableStringBuilder ssBuilder, final List<TextStyleSpanable> italics) {
         for (TextStyleSpanable italic : italics) {
             ssBuilder.setSpan(new StyleSpan(Typeface.ITALIC),
                     italic.start, italic.end,
@@ -111,10 +104,8 @@ public class TextPageRenderDecorator {
         }
     }
 
-    private static void applyShadowColor(final SpannableStringBuilder ssBuilder,
-                                         final List<TextStyleSpanable> shadows) {
-        for (TextStyleSpanable textStyleSpanable :
-                shadows) {
+    private static void applyShadowColor(final SpannableStringBuilder ssBuilder, final List<TextStyleSpanable> shadows) {
+        for (TextStyleSpanable textStyleSpanable : shadows) {
             //TODO make the redius, dx ,dy dynamic
             ssBuilder.setSpan(new ShadowColorSpan(10, 2, 2, textStyleSpanable.color),
                     textStyleSpanable.start,
@@ -134,7 +125,6 @@ public class TextPageRenderDecorator {
 
         }
     }
-
 
     private static Paint.Align setTextAlign(final String textAlign) {
         if (textAlign.equals("left")) {
