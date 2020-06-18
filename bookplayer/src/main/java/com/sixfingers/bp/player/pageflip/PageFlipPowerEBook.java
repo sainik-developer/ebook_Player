@@ -51,13 +51,13 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return event.getAction() == MotionEvent.ACTION_UP ? pageFlipView.onFingerUp(event.getX(), event.getY()) : mGestureDetector.onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);
     }
 
     @Override
     public boolean onDown(MotionEvent e) {
         pageFlipView.onFingerDown(e.getX(), e.getY());
-        return false;
+        return true;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PageFlipPowerEBook extends AbstractPowerEBook implements GestureDet
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return onTouchEvent(e);
+        return super.onTouchEvent(e);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.eschao.android.widget.view.provider;
+package com.sixfingers.bp.cp;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
