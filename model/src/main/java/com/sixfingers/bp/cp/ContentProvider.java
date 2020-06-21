@@ -1,9 +1,11 @@
 package com.sixfingers.bp.cp;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import com.sixfingers.bp.model.Page;
 
+import java.net.URI;
 import java.util.Locale;
 
 /***
@@ -11,7 +13,7 @@ import java.util.Locale;
  * as well it allows the set Language select filter the pages of selected language
  * If no language is selected then Default `English` is cconsidered to be chosen
  */
-public interface ContentProvider {
+public interface ContentProvider<S> {
 
     /***
      * get the file name by index and make a bitmap to fit the height and widget
@@ -36,4 +38,9 @@ public interface ContentProvider {
     void setLanguage(Locale language);
 
     int lastPageIndex();
+
+    URI getAssetUri(final String path);
+
+
+
 }

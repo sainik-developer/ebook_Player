@@ -36,26 +36,21 @@ interface AudioEBook {
      */
     fun play()
 
-    /***
-     * Just enable high light of the text
-     *
-     * @param enable
-     */
-    fun setEnableHighlightCallback(enable: Boolean)
+//    /***
+//     * Just enable high light of the text
+//     *
+//     * @param enable
+//     */
+//    fun setEnableHighlightCallback(enable: Boolean)
     //    /***
 //     *
 //     * @param highLighter
 //     */
 //    void setHighLighter(HighLighter highLighter);
 //
-    /***
-     *
-     * @param onFinished
-     */
-    fun setOnFinished(onFinished: OnFinishedAudio);
-
-    /***
-     *
-     */
-    var isPlaying: Boolean
+//    /***
+//     *
+//     * @param onFinished
+//     */
+//    fun setOnFinished(onFinished: OnFinishedAudio);
 }

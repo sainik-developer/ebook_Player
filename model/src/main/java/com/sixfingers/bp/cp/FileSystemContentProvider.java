@@ -4,19 +4,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.LruCache;
 
 import com.sixfingers.bp.model.Book;
 import com.sixfingers.bp.model.Page;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Locale;
 
 /***
  * This is the Page provider where Content is available on page,
  * it should be mainly in SD card
  */
-public class FileSystemContentProvider implements ContentProvider {
+public class FileSystemContentProvider implements ContentProvider<String> {
 
     private final Book book;
     private Locale locale;
@@ -59,9 +61,7 @@ public class FileSystemContentProvider implements ContentProvider {
             bgBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bgBitmap.eraseColor(0xFFFFFFFF);
             Canvas bgCanvas = new Canvas(bgBitmap);
-
-            Drawable bitmapDrawable =
-                    BitmapDrawable.createFromPath(basePath + File.separator + requestPage.backgroundImageName);
+            Drawable bitmapDrawable = BitmapDrawable.createFromPath(basePath + File.separator + requestPage.backgroundImageName);
             if (bitmapDrawable != null) {
                 bitmapDrawable.setBounds(0, 0, width, height);
                 bitmapDrawable.draw(bgCanvas);
@@ -85,5 +85,10 @@ public class FileSystemContentProvider implements ContentProvider {
     @Override
     public int lastPageIndex() {
         return totalPagesNo - 1;
+    }
+
+    @Override
+    public URI getAssetUri(String path) {
+        return URI.create(basePath + File.separator + path);
     }
 }
